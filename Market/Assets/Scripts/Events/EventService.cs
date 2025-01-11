@@ -1,3 +1,4 @@
+using InventorySystem.Inventory;
 using InventorySystem.Items;
 using InventorySystem.Slot;
 using UnityEngine;
@@ -27,6 +28,7 @@ namespace InventorySystem.Events
 
         public GameEventController<int> OnItemSold { get; }
         public GameEventController<ItemSO> OnInventoryUpdate { get; }
+        public GameEventController UpdateUI { get; }
 
 
         public EventService()
@@ -38,6 +40,7 @@ namespace InventorySystem.Events
             OnItemPurchased = new GameEventController<int>();
             OnInventoryUpdate = new GameEventController<ItemSO>();
             OnItemSold = new GameEventController<int>();
+            UpdateUI = new GameEventController();
         }
     }
 }

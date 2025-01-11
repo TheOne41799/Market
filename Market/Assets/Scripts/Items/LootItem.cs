@@ -22,6 +22,7 @@ namespace InventorySystem.Items
             if (other.gameObject.GetComponent<PlayerView>())
             {
                 EventService.Instance.OnItemLooted.InvokeEvent(ItemSO, quantity);
+
                 Destroy(this.gameObject);
             }
         }

@@ -29,7 +29,7 @@ namespace InventorySystem.Shop
             this.playerService = service;
 
             InitializeSlots();
-            //ToggleInventoryUI();
+            ToggleInventoryUI();
 
             view.SetShopController(this);
         }
@@ -54,6 +54,9 @@ namespace InventorySystem.Shop
                 view.materialItemSlots[i].UpdateUISlot();
             }
 
+            /*previouslySelectedSlot = null;
+            currentSelectedSlot = null;*/
+
             //after implementing player moeny and inventory weight - add remaining database items
         }
 
@@ -73,7 +76,8 @@ namespace InventorySystem.Shop
 
         public void PurchaseItem()
         {
-            if (currentSelectedSlot.itemSO == null || currentSelectedSlot == null) return;
+            if (currentSelectedSlot == null) return;
+            if (currentSelectedSlot.itemSO == null) return;
 
             if(currentSelectedSlot.itemSO.itemPurchasingPrice > playerService.GetPlayerMoney()) return;
 
