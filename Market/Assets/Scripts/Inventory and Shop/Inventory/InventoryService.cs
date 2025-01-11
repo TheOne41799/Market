@@ -6,7 +6,7 @@ namespace InventorySystem.Inventory
 {
     public class InventoryService
     {
-        public InventoryController inventoryController { get; }
+        public InventoryController InventoryController { get; }
         private PlayerService playerService;
 
         public InventoryService(InventoryView inventoryViewPrefab, PlayerService service) 
@@ -16,30 +16,30 @@ namespace InventorySystem.Inventory
 
             this.playerService = service;
 
-            inventoryController = new InventoryController(inventoryModel, inventoryiew, playerService);
+            InventoryController = new InventoryController(inventoryModel, inventoryiew, playerService);
 
             
 
-            EventService.Instance.OnInventoryToggle.AddListener(inventoryController.ToggleInventoryUI);
-            EventService.Instance.OnItemLooted.AddListener(inventoryController.AddItem);
+            EventService.Instance.OnInventoryToggle.AddListener(InventoryController.ToggleInventoryUI);
+            //EventService.Instance.OnItemLooted.AddListener(InventoryController.AddItem);
 
             //EventService.Instance.OnItemLooted.AddListener(inventoryController.InventoryOnItemPickUp);
 
-            EventService.Instance.OnSlotClicked.AddListener(inventoryController.CurrentSelectedSlot);
-            EventService.Instance.OnInventoryUpdate.AddListener(inventoryController.UpdateInventory);
+            EventService.Instance.OnSlotClicked.AddListener(InventoryController.CurrentSelectedSlot);
+            EventService.Instance.OnInventoryUpdate.AddListener(InventoryController.UpdateInventory);
         }
 
         ~InventoryService()
         {
-            EventService.Instance.OnInventoryToggle.RemoveListener(inventoryController.ToggleInventoryUI);
-            EventService.Instance.OnItemLooted.RemoveListener(inventoryController.AddItem);
-            EventService.Instance.OnSlotClicked.RemoveListener(inventoryController.CurrentSelectedSlot);
-            EventService.Instance.OnInventoryUpdate.RemoveListener(inventoryController.UpdateInventory);
+            EventService.Instance.OnInventoryToggle.RemoveListener(InventoryController.ToggleInventoryUI);
+            //EventService.Instance.OnItemLooted.RemoveListener(InventoryController.AddItem);
+            EventService.Instance.OnSlotClicked.RemoveListener(InventoryController.CurrentSelectedSlot);
+            EventService.Instance.OnInventoryUpdate.RemoveListener(InventoryController.UpdateInventory);
         }
 
         public void Update()
         {
-            inventoryController?.Update();
+            InventoryController?.Update();
         }
     }
 }

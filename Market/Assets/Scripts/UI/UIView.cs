@@ -18,7 +18,14 @@ namespace InventorySystem.UI
         private int playerMoney;
         private int playerInventorySize;
         private int playerInventoryWeight;
-        
+
+
+        private void Start()
+        {
+            UpdatePlayerMoneyText();
+            UpdatePlayerInventorySizeText();
+            UpdatePlayerInventoryWeightText();
+        }
 
         public void SetUIController(UIController controller)
         {
@@ -42,15 +49,10 @@ namespace InventorySystem.UI
 
         public void UpdatePlayerInventoryWeightText()
         {
-            int invWeight = uiController.inventoryController.GetInventoryWeight();
+            int playerInventoryWeight = uiController.inventoryController.GetInventoryWeight();
             //Debug.Log(uiController.inventoryController.GetInventoryWeight());
 
             playerInventoryWeightText.text = "InventoryWeight: " + playerInventoryWeight.ToString() + "/ 100";
-        }
-
-        public void UpdateUIOnItemLoot(ItemSO itemSO)
-        {
-            
         }
     }
 }

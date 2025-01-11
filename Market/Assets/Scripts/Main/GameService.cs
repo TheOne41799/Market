@@ -29,7 +29,7 @@ namespace InventorySystem.Main
             inputService = new InputService();
             playerService = new PlayerService(playerViewPrefab);
             inventoryService = new InventoryService(inventoryViewPrefab, playerService);
-            shopService = new ShopService(shopViewPrefab, itemDatabase, playerService);
+            shopService = new ShopService(shopViewPrefab, itemDatabase, playerService, inventoryService);
             uiService = new UIService(uiViewPrefab, inventoryService, playerService); //this i think is not needed
         }
 
