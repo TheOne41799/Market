@@ -24,7 +24,6 @@ namespace InventorySystem.Items
                 
                 if (itemSO == null) return;
                 //EventService.Instance.OnItemLooted.InvokeEvent(ItemSO);
-                Debug.Log("asdasd");
                 EventService.Instance.OnInventoryUpdate.InvokeEvent(itemSO);
 
                 Destroy(this.gameObject);

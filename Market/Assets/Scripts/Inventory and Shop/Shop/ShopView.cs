@@ -9,7 +9,11 @@ namespace InventorySystem.Shop
 {
     public class ShopView : MonoBehaviour
     {
-        public SlotView[] materialItemSlots;
+        public SlotView[] armourAndShieldSlots;
+        public SlotView[] weaponSlots;
+        public SlotView[] consumableSlots;
+        public SlotView[] treasureSlots;
+
         public Button purchaseButton;
 
         private ShopController shopController;

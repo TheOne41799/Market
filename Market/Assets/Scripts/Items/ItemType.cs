@@ -5,7 +5,7 @@ namespace InventorySystem.Items
     public enum ItemType
     {
         NONE,
-        MATERIALS,
+        AMOUR_AND_SHIELDS,
         WEAPONS,
         CONSUMABLES,
         TREASURE
