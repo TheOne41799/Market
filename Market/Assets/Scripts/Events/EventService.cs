@@ -1,4 +1,5 @@
 using InventorySystem.Items;
+using InventorySystem.Slot;
 using UnityEngine;
 
 namespace InventorySystem.Events
@@ -21,6 +22,7 @@ namespace InventorySystem.Events
         public GameEventController OnInventoryToggle { get; }
         public GameEventController<Vector3> OnPlayerMove { get; }
         public GameEventController<ItemSO, int> OnItemLooted { get; }
+        public GameEventController<SlotView> OnSlotClicked { get; }
 
 
         public EventService()
@@ -28,6 +30,7 @@ namespace InventorySystem.Events
             OnInventoryToggle = new GameEventController();
             OnPlayerMove = new GameEventController<Vector3>();
             OnItemLooted = new GameEventController<ItemSO, int>();
+            OnSlotClicked = new GameEventController<SlotView>();
         }
     }
 }

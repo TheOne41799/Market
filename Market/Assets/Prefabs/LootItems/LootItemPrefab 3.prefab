@@ -47,7 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ItemSO: {fileID: 11400000, guid: ec7fd0f30e45941458c25434586e5ab6, type: 2}
-  quantity: 1
+  quantity: 2
 --- !u!65 &1898665303744650958
 BoxCollider:
   m_ObjectHideFlags: 0

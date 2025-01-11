@@ -92,8 +92,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemSO: {fileID: 0}
   quantity: 0
+  bgImage: {fileID: 389521149462575919}
   itemIcon: {fileID: 382844248772252355}
   quantityText: {fileID: 94409162567825177}
+  quantityTextBGImage: {fileID: 5143252745548026972}
 --- !u!1 &4050332168999388416
 GameObject:
   m_ObjectHideFlags: 0

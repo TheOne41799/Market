@@ -17,12 +17,14 @@ namespace InventorySystem.Inventory
 
             EventService.Instance.OnInventoryToggle.AddListener(inventoryController.ToggleInventoryUI);
             EventService.Instance.OnItemLooted.AddListener(inventoryController.AddItem);
+            EventService.Instance.OnSlotClicked.AddListener(inventoryController.CurrentSelectedSlot);
         }
 
         ~InventoryService()
         {
             EventService.Instance.OnInventoryToggle.RemoveListener(inventoryController.ToggleInventoryUI);
             EventService.Instance.OnItemLooted.RemoveListener(inventoryController.AddItem);
+            EventService.Instance.OnSlotClicked.RemoveListener(inventoryController.CurrentSelectedSlot);
         }
 
         public void Update()
