@@ -19,5 +19,8 @@ namespace InventorySystem.Items
 
         [Header("Qualities")]
         public int itemWeight;
+        public ItemType itemType;
+        public int quantity;
+        public ItemRarity itemRarity;
     }
 }

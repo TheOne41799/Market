@@ -27,12 +27,14 @@ namespace InventorySystem.Slot
                 itemIcon.gameObject.SetActive(true);
                 quantityText.text = quantity.ToString();
                 quantityTextBGImage.gameObject.SetActive(true);
+                //Debug.Log("asdsd");
             }
             else
             {
                 itemIcon.gameObject.SetActive(false);
                 quantityText.text = "";
-                quantityTextBGImage.gameObject.SetActive(false);                
+                quantityTextBGImage.gameObject.SetActive(false);
+                //Debug.Log("asdsd");
             }
         }
 

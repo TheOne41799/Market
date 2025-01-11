@@ -1,6 +1,8 @@
 using InventorySystem.Inputs;
 using InventorySystem.Inventory;
+using InventorySystem.Items;
 using InventorySystem.Player;
+using InventorySystem.Shop;
 using UnityEngine;
 
 namespace InventorySystem.Main
@@ -10,21 +12,26 @@ namespace InventorySystem.Main
         private InputService inputService;
         private PlayerService playerService;
         private InventoryService inventoryService;
+        public ShopService shopService;
 
         [SerializeField] private PlayerView playerViewPrefab;
         [SerializeField] private InventoryView inventoryViewPrefab;
+        [SerializeField] private ShopView shopViewPrefab;
+        [SerializeField] private ItemDatabase itemDatabase;
 
         private void Awake()
         {
             inputService = new InputService();
             playerService = new PlayerService(playerViewPrefab);
             inventoryService = new InventoryService(inventoryViewPrefab);
+            shopService = new ShopService(shopViewPrefab, itemDatabase);
         }
 
         private void Update()
         {
             playerService?.Update();
             inputService?.Update();
+            shopService?.Update();
         }
     }
 }

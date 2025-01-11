@@ -1,28 +1,32 @@
+using InventorySystem.Inventory;
 using InventorySystem.Items;
-using InventorySystem.Player;
 using InventorySystem.Slot;
-using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
-namespace InventorySystem.Inventory
+namespace InventorySystem.Shop
 {
-    public class InventoryController
+    public class ShopController
     {
-        private InventoryModel model;
-        private InventoryView view;
+        private ShopModel model;
+        private ShopView view;
+        private ItemDatabase itemDatabase;
 
         private SlotView currentSelectedSlot;
         private SlotView previouslySelectedSlot;
 
-        public InventoryController(InventoryModel model, InventoryView view)
+        public ShopController(ShopModel model, ShopView view, ItemDatabase database)
         {
             this.model = model;
             this.view = view;
+            this.itemDatabase = database;
 
             InitializeSlots();
             //ToggleInventoryUI();
 
-            view.SetInventoryController(this);
+            view.SetShopController(this);
         }
 
         public void Update()
@@ -35,27 +39,17 @@ namespace InventorySystem.Inventory
             view.gameObject.SetActive(!view.gameObject.activeSelf);
         }
 
-        //this is not useful now - maybe useful when creating a save load system
         private void InitializeSlots()
         {
-            foreach (var slot in view.itemSlots)
+            for (int i = 0; i < view.materialItemSlots.Length && i < itemDatabase.materialItems.Count; i++)
             {
-                slot.UpdateUISlot();
-            }
-        }
+                view.materialItemSlots[i].itemSO = itemDatabase.materialItems[i];
+                view.materialItemSlots[i].quantity = itemDatabase.materialItems[i].quantity;
 
-        public void AddItem(ItemSO itemSO, int quantity)
-        {
-            foreach(var slot in view.itemSlots)
-            {
-                if(slot.itemSO == null)
-                {
-                    slot.itemSO = itemSO;
-                    slot.quantity = quantity;
-                    slot.UpdateUISlot();
-                    return;
-                }                
+                view.materialItemSlots[i].UpdateUISlot();
             }
+
+            //after implementing player moeny and inventory weight - add remaining database items
         }
 
         public void CurrentSelectedSlot(SlotView slotView)
@@ -72,11 +66,11 @@ namespace InventorySystem.Inventory
             if (previouslySelectedSlot != null) previouslySelectedSlot.bgImage.color = Color.white;
         }
 
-        public void SellItem()
+        public void PurchaseItem()
         {
-            if(currentSelectedSlot == null) return;
+            if (currentSelectedSlot == null) return;
 
-            if (currentSelectedSlot.itemSO != null && currentSelectedSlot.gameObject.GetComponentInParent<InventoryView>())
+            if (currentSelectedSlot.itemSO != null && currentSelectedSlot.gameObject.GetComponentInParent<ShopView>())
             {
                 currentSelectedSlot.itemSO = null;
                 currentSelectedSlot.UpdateUISlot();
