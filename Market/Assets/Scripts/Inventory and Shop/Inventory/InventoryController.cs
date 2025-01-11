@@ -100,28 +100,30 @@ namespace InventorySystem.Inventory
 
         public void UpdateInventory(ItemSO itemSO)
         {
-            if (model.MaxInventoryWeight < itemSO.itemWeight || model.MaxInventorySize >= view.itemSlots.Length)
+            if (model.CurrentInventoryWeight + itemSO.itemWeight > model.MaxInventoryWeight
+                || model.CurrentInventorySize >= model.MaxInventorySize)
             {
-                Debug.Log("Inventory cant carry anymore weight");
                 return;
             }
+
             AddItem(itemSO, itemSO.quantity);
+
             InventoryWeightOnPurchase(itemSO.itemWeight);
         }
 
-        public void InventoryWeightOnPurchase(int weight)
+        private void InventoryWeightOnPurchase(int weight)
         {
-            model.CurrentInventoryWeight -= weight;
-            model.MaxInventorySize++;
+            model.CurrentInventoryWeight += weight;
+            model.CurrentInventorySize++;
             //Debug.Log(model.InventoryWeight);
 
             EventService.Instance.UpdateUI.InvokeEvent();
         }
 
-        public void InventoryWeightOnItemSell(int weight)
+        private void InventoryWeightOnItemSell(int weight)
         {
-            model.CurrentInventoryWeight += weight;
-            model.MaxInventorySize--;
+            model.CurrentInventoryWeight -= weight;
+            model.CurrentInventorySize--;
             //Debug.Log(model.InventoryWeight);
             EventService.Instance.UpdateUI.InvokeEvent();
         }
@@ -143,12 +145,12 @@ namespace InventorySystem.Inventory
 
         public int GetInventorySize()
         {
-            return model.MaxInventorySize;
+            return model.CurrentInventorySize;
         }
 
         public int GetInventoryWeight()
         {
-            return model.MaxInventoryWeight;
+            return model.CurrentInventoryWeight;
         }
     }
 }

@@ -12,15 +12,17 @@ namespace InventorySystem.Shop
     {
         private ShopController shopController;
         private PlayerService playerService;
+        private InventoryService inventoryService;
 
-        public ShopService(ShopView shopViewPrefab, ItemDatabase database, PlayerService service) 
+        public ShopService(ShopView shopViewPrefab, ItemDatabase database, PlayerService service, InventoryService invService) 
         {
             var ShopModel = new ShopModel();
             var shopView = GameObject.Instantiate(shopViewPrefab);
 
             this.playerService = service;
+            this.inventoryService = invService;
 
-            shopController = new ShopController(ShopModel, shopView, database, playerService);
+            shopController = new ShopController(ShopModel, shopView, database, playerService, inventoryService);
 
             EventService.Instance.OnInventoryToggle.AddListener(shopController.ToggleInventoryUI);
             EventService.Instance.OnSlotClicked.AddListener(shopController.CurrentSelectedSlot);

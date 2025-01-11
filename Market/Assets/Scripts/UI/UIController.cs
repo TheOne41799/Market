@@ -26,7 +26,7 @@ namespace InventorySystem.UI
 
             view.SetUIController(this);
 
-            inventoryController = inventoryService.inventoryController;
+            inventoryController = inventoryService.InventoryController;
         }
 
         public void UpdateUI()
@@ -34,11 +34,6 @@ namespace InventorySystem.UI
             view.UpdatePlayerMoneyText();
             view.UpdatePlayerInventorySizeText();
             view.UpdatePlayerInventoryWeightText();
-        }
-        
-        public void UpdateUIOnItemLoot(ItemSO itemSO)
-        {
-            view.UpdateUIOnItemLoot(itemSO);
         }
     }
 }

@@ -17,21 +17,24 @@ namespace InventorySystem.Shop
         private ItemDatabase itemDatabase;
 
         private PlayerService playerService;
+        private InventoryService inventoryService;
 
         private SlotView currentSelectedSlot;
         private SlotView previouslySelectedSlot;
 
-        public ShopController(ShopModel model, ShopView view, ItemDatabase database, PlayerService service)
+        public ShopController(ShopModel model, ShopView view, ItemDatabase database, PlayerService service, InventoryService inventoryService)
         {
             this.model = model;
             this.view = view;
             this.itemDatabase = database;
             this.playerService = service;
+            this.inventoryService = inventoryService;
 
             InitializeSlots();
             ToggleInventoryUI();
 
             view.SetShopController(this);
+            
         }
 
         public void Update()
@@ -80,6 +83,9 @@ namespace InventorySystem.Shop
             if (currentSelectedSlot.itemSO == null) return;
 
             if(currentSelectedSlot.itemSO.itemPurchasingPrice > playerService.GetPlayerMoney()) return;
+
+            if (inventoryService.InventoryController.GetInventoryWeight() >= 100) return;
+            if (inventoryService.InventoryController.GetInventorySize() >= 12) return;
 
             if (currentSelectedSlot.gameObject.GetComponentInParent<ShopView>())
             {

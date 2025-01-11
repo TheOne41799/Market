@@ -22,7 +22,7 @@ namespace InventorySystem.Events
 
         public GameEventController OnInventoryToggle { get; }
         public GameEventController<Vector3> OnPlayerMove { get; }
-        public GameEventController<ItemSO, int> OnItemLooted { get; }
+        //public GameEventController<ItemSO> OnItemLooted { get; }
         public GameEventController<SlotView> OnSlotClicked { get; }
         public GameEventController<int> OnItemPurchased { get; }
 
@@ -35,7 +35,7 @@ namespace InventorySystem.Events
         {
             OnInventoryToggle = new GameEventController();
             OnPlayerMove = new GameEventController<Vector3>();
-            OnItemLooted = new GameEventController<ItemSO, int>();
+            //OnItemLooted = new GameEventController<ItemSO, int>();
             OnSlotClicked = new GameEventController<SlotView>();
             OnItemPurchased = new GameEventController<int>();
             OnInventoryUpdate = new GameEventController<ItemSO>();
