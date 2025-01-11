@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Gold Bar
   itemDescription: This is an golden bar
-  itemIcon: {fileID: 21300000, guid: 782aded1a0300494c94d52c03b6037f7, type: 3}
+  itemIcon: {fileID: 21300000, guid: dffdce26aa919c942bbc5f80980fbc12, type: 3}
   itemSellingPrice: 26
   itemPurchasingPrice: 7
   itemWeight: 5

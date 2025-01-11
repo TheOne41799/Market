@@ -83,8 +83,6 @@ namespace InventorySystem.Shop
 
             /*previouslySelectedSlot = null;
             currentSelectedSlot = null;*/
-
-            //after implementing player moeny and inventory weight - add remaining database items
         }
 
         public void CurrentSelectedSlot(SlotView slotView)
@@ -118,6 +116,11 @@ namespace InventorySystem.Shop
 
                 //currentSelectedSlot.itemSO = null;
                 currentSelectedSlot.UpdateUISlot();            }
+        }
+
+        public void ToggleUI(int index)
+        {
+            view.ToggleGameObject(index);
         }
     }
 }
