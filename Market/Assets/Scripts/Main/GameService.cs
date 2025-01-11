@@ -19,12 +19,14 @@ namespace InventorySystem.Main
         [SerializeField] private ShopView shopViewPrefab;
         [SerializeField] private ItemDatabase itemDatabase;
 
+        //todo - check for inventory full condition
+
         private void Awake()
         {
             inputService = new InputService();
             playerService = new PlayerService(playerViewPrefab);
-            inventoryService = new InventoryService(inventoryViewPrefab);
-            shopService = new ShopService(shopViewPrefab, itemDatabase);
+            inventoryService = new InventoryService(inventoryViewPrefab, playerService);
+            shopService = new ShopService(shopViewPrefab, itemDatabase, playerService);
         }
 
         private void Update()

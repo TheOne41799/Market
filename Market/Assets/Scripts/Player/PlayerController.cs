@@ -22,5 +22,22 @@ namespace InventorySystem.Player
         {
 
         }
+
+        public int GetPlayerMoney()
+        {
+            return model.PlayerMoney;
+        }
+
+        public void DeductPlayerMoney(int price)
+        {
+            model.PlayerMoney -= price;
+            //Debug.Log(model.PlayerMoney);
+        }
+
+        public void AddPlayerMoney(int price)
+        {
+            model.PlayerMoney += price;
+            //Debug.Log(model.PlayerMoney);
+        }
     }
 }
