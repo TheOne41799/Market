@@ -18,3 +18,6 @@ MonoBehaviour:
   itemSellingPrice: 0
   itemPurchasingPrice: 0
   itemWeight: 0
+  itemType: 1
+  quantity: 1
+  itemRarity: 0
