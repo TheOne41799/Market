@@ -1,3 +1,4 @@
+using InventorySystem.Events;
 using InventorySystem.Items;
 using InventorySystem.Player;
 using InventorySystem.Slot;
@@ -11,13 +12,18 @@ namespace InventorySystem.Inventory
         private InventoryModel model;
         private InventoryView view;
 
+        //is dependency injection needed for player service??????????
+        private PlayerService playerService;
+
         private SlotView currentSelectedSlot;
         private SlotView previouslySelectedSlot;
 
-        public InventoryController(InventoryModel model, InventoryView view)
+        public InventoryController(InventoryModel model, InventoryView view, PlayerService service)
         {
             this.model = model;
             this.view = view;
+
+            this.playerService = service;
 
             InitializeSlots();
             //ToggleInventoryUI();
@@ -74,13 +80,42 @@ namespace InventorySystem.Inventory
 
         public void SellItem()
         {
-            if(currentSelectedSlot == null) return;
+            if(currentSelectedSlot == null) return;            
 
             if (currentSelectedSlot.itemSO != null && currentSelectedSlot.gameObject.GetComponentInParent<InventoryView>())
             {
+                EventService.Instance.OnItemSold.InvokeEvent(currentSelectedSlot.itemSO.itemSellingPrice);
+
+                InventoryWeightOnItemSell(currentSelectedSlot.itemSO.itemWeight);
+
                 currentSelectedSlot.itemSO = null;
                 currentSelectedSlot.UpdateUISlot();
             }
+        }
+
+        public void UpdateInventory(ItemSO itemSO)
+        {
+            if (model.InventoryWeight < itemSO.itemWeight || model.CurrentInventorySize >= view.itemSlots.Length)
+            {
+                Debug.Log("Inventory cant carry anymore weight");
+                return;
+            }
+            AddItem(itemSO, itemSO.quantity);
+            InventoryWeightOnPurchaseOrPickup(itemSO.itemWeight);
+        }
+
+        public void InventoryWeightOnPurchaseOrPickup(int weight)
+        {
+            model.InventoryWeight -= weight;
+            model.CurrentInventorySize++;
+            //Debug.Log(model.InventoryWeight);
+        }
+
+        public void InventoryWeightOnItemSell(int weight)
+        {
+            model.InventoryWeight += weight;
+            model.CurrentInventorySize--;
+            //Debug.Log(model.InventoryWeight);
         }
     }
 }

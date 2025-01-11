@@ -1,5 +1,7 @@
+using InventorySystem.Events;
 using InventorySystem.Inventory;
 using InventorySystem.Items;
+using InventorySystem.Player;
 using InventorySystem.Slot;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,14 +16,17 @@ namespace InventorySystem.Shop
         private ShopView view;
         private ItemDatabase itemDatabase;
 
+        private PlayerService playerService;
+
         private SlotView currentSelectedSlot;
         private SlotView previouslySelectedSlot;
 
-        public ShopController(ShopModel model, ShopView view, ItemDatabase database)
+        public ShopController(ShopModel model, ShopView view, ItemDatabase database, PlayerService service)
         {
             this.model = model;
             this.view = view;
             this.itemDatabase = database;
+            this.playerService = service;
 
             InitializeSlots();
             //ToggleInventoryUI();
@@ -68,13 +73,17 @@ namespace InventorySystem.Shop
 
         public void PurchaseItem()
         {
-            if (currentSelectedSlot == null) return;
+            if (currentSelectedSlot.itemSO == null || currentSelectedSlot == null) return;
 
-            if (currentSelectedSlot.itemSO != null && currentSelectedSlot.gameObject.GetComponentInParent<ShopView>())
+            if(currentSelectedSlot.itemSO.itemPurchasingPrice > playerService.GetPlayerMoney()) return;
+
+            if (currentSelectedSlot.gameObject.GetComponentInParent<ShopView>())
             {
-                currentSelectedSlot.itemSO = null;
-                currentSelectedSlot.UpdateUISlot();
-            }
+                EventService.Instance.OnItemPurchased.InvokeEvent(currentSelectedSlot.itemSO.itemPurchasingPrice);
+                EventService.Instance.OnInventoryUpdate.InvokeEvent(currentSelectedSlot.itemSO);
+
+                //currentSelectedSlot.itemSO = null;
+                currentSelectedSlot.UpdateUISlot();            }
         }
     }
 }
