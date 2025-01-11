@@ -6,7 +6,7 @@ namespace InventorySystem.Inventory
 {
     public class InventoryService
     {
-        private InventoryController inventoryController;
+        public InventoryController inventoryController { get; }
         private PlayerService playerService;
 
         public InventoryService(InventoryView inventoryViewPrefab, PlayerService service) 
@@ -22,6 +22,9 @@ namespace InventorySystem.Inventory
 
             EventService.Instance.OnInventoryToggle.AddListener(inventoryController.ToggleInventoryUI);
             EventService.Instance.OnItemLooted.AddListener(inventoryController.AddItem);
+
+            //EventService.Instance.OnItemLooted.AddListener(inventoryController.InventoryOnItemPickUp);
+
             EventService.Instance.OnSlotClicked.AddListener(inventoryController.CurrentSelectedSlot);
             EventService.Instance.OnInventoryUpdate.AddListener(inventoryController.UpdateInventory);
         }

@@ -4,6 +4,7 @@ using InventorySystem.Player;
 using InventorySystem.Slot;
 using System;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 namespace InventorySystem.Inventory
 {
@@ -25,8 +26,11 @@ namespace InventorySystem.Inventory
 
             this.playerService = service;
 
+            model.CurrentInventoryWeight = 0;
+            model.CurrentInventorySize = 0;
+
             InitializeSlots();
-            //ToggleInventoryUI();
+            ToggleInventoryUI();
 
             view.SetInventoryController(this);
         }
@@ -58,7 +62,8 @@ namespace InventorySystem.Inventory
                 {
                     slot.itemSO = itemSO;
                     slot.quantity = quantity;
-                    slot.UpdateUISlot();
+                    slot.UpdateUISlot();                    
+
                     return;
                 }                
             }
@@ -95,27 +100,55 @@ namespace InventorySystem.Inventory
 
         public void UpdateInventory(ItemSO itemSO)
         {
-            if (model.InventoryWeight < itemSO.itemWeight || model.CurrentInventorySize >= view.itemSlots.Length)
+            if (model.MaxInventoryWeight < itemSO.itemWeight || model.MaxInventorySize >= view.itemSlots.Length)
             {
                 Debug.Log("Inventory cant carry anymore weight");
                 return;
             }
             AddItem(itemSO, itemSO.quantity);
-            InventoryWeightOnPurchaseOrPickup(itemSO.itemWeight);
+            InventoryWeightOnPurchase(itemSO.itemWeight);
         }
 
-        public void InventoryWeightOnPurchaseOrPickup(int weight)
+        public void InventoryWeightOnPurchase(int weight)
         {
-            model.InventoryWeight -= weight;
-            model.CurrentInventorySize++;
+            model.CurrentInventoryWeight -= weight;
+            model.MaxInventorySize++;
             //Debug.Log(model.InventoryWeight);
+
+            EventService.Instance.UpdateUI.InvokeEvent();
         }
 
         public void InventoryWeightOnItemSell(int weight)
         {
-            model.InventoryWeight += weight;
-            model.CurrentInventorySize--;
+            model.CurrentInventoryWeight += weight;
+            model.MaxInventorySize--;
             //Debug.Log(model.InventoryWeight);
+            EventService.Instance.UpdateUI.InvokeEvent();
+        }
+
+        /*public void InventoryOnItemPickUp(ItemSO itemSO, int quantity)
+        {
+            if (model.CurrentInventoryWeight + itemSO.itemWeight > model.MaxInventoryWeight 
+                || model.CurrentInventorySize >= model.MaxInventorySize)
+            {
+                Debug.Log("Inventory cant carry anymore weight");
+                return;
+            }
+            AddItem(itemSO, itemSO.quantity);
+            InventoryWeightOnPurchase(itemSO.itemWeight);
+
+            model.CurrentInventoryWeight += itemSO.itemWeight;
+            model.CurrentInventorySize++;
+        }*/
+
+        public int GetInventorySize()
+        {
+            return model.MaxInventorySize;
+        }
+
+        public int GetInventoryWeight()
+        {
+            return model.MaxInventoryWeight;
         }
     }
 }

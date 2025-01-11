@@ -1,3 +1,4 @@
+using InventorySystem.Events;
 using UnityEngine;
 
 namespace InventorySystem.Player
@@ -32,12 +33,16 @@ namespace InventorySystem.Player
         {
             model.PlayerMoney -= price;
             //Debug.Log(model.PlayerMoney);
+
+            EventService.Instance.UpdateUI.InvokeEvent();
         }
 
         public void AddPlayerMoney(int price)
         {
             model.PlayerMoney += price;
             //Debug.Log(model.PlayerMoney);
+
+            EventService.Instance.UpdateUI.InvokeEvent();
         }
     }
 }
