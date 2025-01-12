@@ -44,7 +44,8 @@ namespace InventorySystem.UI
             playerInventorySize = uiController.inventoryController.GetInventorySize();
             //Debug.Log(uiController.inventoryController.GetInventorySize());
 
-            playerInventorySizeText.text = "InventorySize: " + playerInventorySize.ToString() + " / 12";
+            playerInventorySizeText.text = "InventorySize: " + playerInventorySize.ToString() + " / " +
+                                            uiController.inventoryController.GetMaxInventorySize().ToString();
         }
 
         public void UpdatePlayerInventoryWeightText()
@@ -52,7 +53,8 @@ namespace InventorySystem.UI
             int playerInventoryWeight = uiController.inventoryController.GetInventoryWeight();
             //Debug.Log(uiController.inventoryController.GetInventoryWeight());
 
-            playerInventoryWeightText.text = "InventoryWeight: " + playerInventoryWeight.ToString() + "/ 100";
+            playerInventoryWeightText.text = "InventoryWeight: " + playerInventoryWeight.ToString() + "/ " + 
+                                              uiController.inventoryController.GetMaxInventoryWeight().ToString();
         }
     }
 }

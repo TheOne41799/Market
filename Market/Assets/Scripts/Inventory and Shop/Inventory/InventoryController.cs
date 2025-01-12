@@ -152,5 +152,15 @@ namespace InventorySystem.Inventory
         {
             return model.CurrentInventoryWeight;
         }
+
+        public int GetMaxInventorySize()
+        {
+            return model.MaxInventorySize;
+        }
+
+        public int GetMaxInventoryWeight()
+        {
+            return model.MaxInventoryWeight;
+        }
     }
 }

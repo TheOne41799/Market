@@ -49,18 +49,40 @@ namespace InventorySystem.Shop
 
         private void InitializeSlots()
         {
-            for (int i = 0; i < view.materialItemSlots.Length && i < itemDatabase.materialItems.Count; i++)
+            for (int i = 0; i < view.armourAndShieldSlots.Length && i < itemDatabase.armourAndShieldItems.Count; i++)
             {
-                view.materialItemSlots[i].itemSO = itemDatabase.materialItems[i];
-                view.materialItemSlots[i].quantity = itemDatabase.materialItems[i].quantity;
+                view.armourAndShieldSlots[i].itemSO = itemDatabase.armourAndShieldItems[i];
+                view.armourAndShieldSlots[i].quantity = itemDatabase.armourAndShieldItems[i].quantity;
 
-                view.materialItemSlots[i].UpdateUISlot();
+                view.armourAndShieldSlots[i].UpdateUISlot();
+            }
+
+            for (int i = 0; i < view.weaponSlots.Length && i < itemDatabase.weaponItems.Count; i++)
+            {
+                view.weaponSlots[i].itemSO = itemDatabase.weaponItems[i];
+                view.weaponSlots[i].quantity = itemDatabase.weaponItems[i].quantity;
+
+                view.weaponSlots[i].UpdateUISlot();
+            }
+
+            for (int i = 0; i < view.consumableSlots.Length && i < itemDatabase.consumableItems.Count; i++)
+            {
+                view.consumableSlots[i].itemSO = itemDatabase.consumableItems[i];
+                view.consumableSlots[i].quantity = itemDatabase.consumableItems[i].quantity;
+
+                view.consumableSlots[i].UpdateUISlot();
+            }
+
+            for (int i = 0; i < view.treasureSlots.Length && i < itemDatabase.treasureItems.Count; i++)
+            {
+                view.treasureSlots[i].itemSO = itemDatabase.treasureItems[i];
+                view.treasureSlots[i].quantity = itemDatabase.treasureItems[i].quantity;
+
+                view.treasureSlots[i].UpdateUISlot();
             }
 
             /*previouslySelectedSlot = null;
             currentSelectedSlot = null;*/
-
-            //after implementing player moeny and inventory weight - add remaining database items
         }
 
         public void CurrentSelectedSlot(SlotView slotView)
@@ -94,6 +116,11 @@ namespace InventorySystem.Shop
 
                 //currentSelectedSlot.itemSO = null;
                 currentSelectedSlot.UpdateUISlot();            }
+        }
+
+        public void ToggleUI(int index)
+        {
+            view.ToggleGameObject(index);
         }
     }
 }

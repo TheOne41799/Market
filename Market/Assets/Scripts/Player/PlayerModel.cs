@@ -5,6 +5,6 @@ namespace InventorySystem.Player
     public class PlayerModel
     {
         public float Speed { get; private set; } = 15f;
-        public int PlayerMoney { get; set; } = 2000;
+        public int PlayerMoney { get; set; } = 300;
     }
 }
