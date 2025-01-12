@@ -43,6 +43,8 @@ namespace InventorySystem.Slot
             if (eventData.button == PointerEventData.InputButton.Left)
             {
                 EventService.Instance.OnSlotClicked.InvokeEvent(this);
+
+                EventService.Instance.OnAudioEffectPlay.InvokeEvent(Audio.AudioTypes.INVENTORY_ITEM_SELECTED, false);
             }
         }
     }

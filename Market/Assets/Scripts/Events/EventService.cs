@@ -1,6 +1,7 @@
 using InventorySystem.Inventory;
 using InventorySystem.Items;
 using InventorySystem.Slot;
+using InventorySystem.Audio;
 using UnityEngine;
 
 namespace InventorySystem.Events
@@ -25,10 +26,11 @@ namespace InventorySystem.Events
         //public GameEventController<ItemSO> OnItemLooted { get; }
         public GameEventController<SlotView> OnSlotClicked { get; }
         public GameEventController<int> OnItemPurchased { get; }
-
         public GameEventController<int> OnItemSold { get; }
         public GameEventController<ItemSO> OnInventoryUpdate { get; }
         public GameEventController UpdateUI { get; }
+        public GameEventController<AudioTypes, bool> OnBackgroundMusicPlay { get; }
+        public GameEventController<AudioTypes, bool> OnAudioEffectPlay { get; }
 
 
         public EventService()
@@ -41,6 +43,8 @@ namespace InventorySystem.Events
             OnInventoryUpdate = new GameEventController<ItemSO>();
             OnItemSold = new GameEventController<int>();
             UpdateUI = new GameEventController();
+            OnBackgroundMusicPlay = new GameEventController<AudioTypes, bool>();
+            OnAudioEffectPlay = new GameEventController<AudioTypes, bool>();
         }
     }
 }
