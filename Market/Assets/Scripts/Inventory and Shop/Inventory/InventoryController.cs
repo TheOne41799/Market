@@ -1,6 +1,7 @@
 using InventorySystem.Events;
 using InventorySystem.Items;
 using InventorySystem.Player;
+using InventorySystem.Shop;
 using InventorySystem.Slot;
 using System;
 using UnityEngine;
@@ -85,11 +86,25 @@ namespace InventorySystem.Inventory
 
         public void SellItem()
         {
-            if(currentSelectedSlot == null) return;            
+            if (currentSelectedSlot == null || currentSelectedSlot.itemSO == null
+                || currentSelectedSlot.gameObject.GetComponentInParent<ShopView>())
+            {
+                EventService.Instance.OnAudioEffectPlay.InvokeEvent(Audio.AudioTypes.ERROR, false);
+                return;
+            }
 
-            if (currentSelectedSlot.itemSO != null && currentSelectedSlot.gameObject.GetComponentInParent<InventoryView>())
+            /*if (currentSelectedSlot == null)
+            {
+                EventService.Instance.OnAudioEffectPlay.InvokeEvent(Audio.AudioTypes.ERROR, false);
+                return;
+            }*/
+
+            if (currentSelectedSlot.gameObject.GetComponentInParent<InventoryView>())
             {
                 EventService.Instance.OnItemSold.InvokeEvent(currentSelectedSlot.itemSO.itemSellingPrice);
+                EventService.Instance.OnAudioEffectPlay.InvokeEvent(
+                    Audio.AudioTypes.INVENTORY_ITEM_PURCHASED_AND_SOLD,
+                    false);
 
                 InventoryWeightOnItemSell(currentSelectedSlot.itemSO.itemWeight);
 

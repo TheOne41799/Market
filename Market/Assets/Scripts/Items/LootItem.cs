@@ -25,6 +25,7 @@ namespace InventorySystem.Items
                 if (itemSO == null) return;
                 //EventService.Instance.OnItemLooted.InvokeEvent(ItemSO);
                 EventService.Instance.OnInventoryUpdate.InvokeEvent(itemSO);
+                EventService.Instance.OnAudioEffectPlay.InvokeEvent(Audio.AudioTypes.ITEM_PICKUP, false);
 
                 Destroy(this.gameObject);
             }

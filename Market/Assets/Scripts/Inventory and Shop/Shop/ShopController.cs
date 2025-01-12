@@ -101,26 +101,51 @@ namespace InventorySystem.Shop
 
         public void PurchaseItem()
         {
-            if (currentSelectedSlot == null) return;
+            if (currentSelectedSlot == null || currentSelectedSlot.itemSO == null 
+                || currentSelectedSlot.itemSO.itemPurchasingPrice > playerService.GetPlayerMoney()
+                || inventoryService.InventoryController.GetInventoryWeight()
+                   + currentSelectedSlot.itemSO.itemWeight
+                   > inventoryService.InventoryController.GetMaxInventoryWeight()
+                || inventoryService.InventoryController.GetInventorySize()
+                   >= inventoryService.InventoryController.GetMaxInventorySize()
+                || currentSelectedSlot.gameObject.GetComponentInParent<InventoryView>())
+            {
+                EventService.Instance.OnAudioEffectPlay.InvokeEvent(Audio.AudioTypes.ERROR, false);
+                return;
+            }
+
+            /*if (currentSelectedSlot == null) return;
             if (currentSelectedSlot.itemSO == null) return;
 
-            if(currentSelectedSlot.itemSO.itemPurchasingPrice > playerService.GetPlayerMoney()) return;
+            if (currentSelectedSlot.itemSO.itemPurchasingPrice > playerService.GetPlayerMoney()) return;
 
-            if (inventoryService.InventoryController.GetInventoryWeight() >= 100) return;
-            if (inventoryService.InventoryController.GetInventorySize() >= 12) return;
+            if (inventoryService.InventoryController.GetInventoryWeight()
+                + currentSelectedSlot.itemSO.itemWeight 
+                > inventoryService.InventoryController.GetMaxInventoryWeight()) 
+                return;
+
+            if (inventoryService.InventoryController.GetInventorySize()
+                >= inventoryService.InventoryController.GetMaxInventorySize()) 
+                return;*/
 
             if (currentSelectedSlot.gameObject.GetComponentInParent<ShopView>())
             {
                 EventService.Instance.OnItemPurchased.InvokeEvent(currentSelectedSlot.itemSO.itemPurchasingPrice);
                 EventService.Instance.OnInventoryUpdate.InvokeEvent(currentSelectedSlot.itemSO);
+                EventService.Instance.OnAudioEffectPlay.InvokeEvent(
+                    Audio.AudioTypes.INVENTORY_ITEM_PURCHASED_AND_SOLD,
+                    false);
 
                 //currentSelectedSlot.itemSO = null;
-                currentSelectedSlot.UpdateUISlot();            }
+                currentSelectedSlot.UpdateUISlot();            
+            }
         }
 
         public void ToggleUI(int index)
         {
             view.ToggleGameObject(index);
+
+            EventService.Instance.OnAudioEffectPlay.InvokeEvent(Audio.AudioTypes.INVENTORY_ITEM_SELECTED, false);
         }
     }
 }

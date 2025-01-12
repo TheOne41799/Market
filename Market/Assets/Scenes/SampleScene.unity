@@ -875,7 +875,10 @@ MonoBehaviour:
     type: 3}
   uiViewPrefab: {fileID: 4807813744401356694, guid: f1f37d1d290670849acf9efae735f8bf,
     type: 3}
+  audioViewPrefab: {fileID: 824401472690885698, guid: 022d1ea2da4fa6441ad43d4d1f41da59,
+    type: 3}
   itemDatabase: {fileID: 11400000, guid: a22d04da0e1f16b408eea06c2fe7f5a8, type: 2}
+  audioDatabase: {fileID: 11400000, guid: 30547c70e80d4a9449bbb57bcf59f7e7, type: 2}
 --- !u!4 &2073653157
 Transform:
   m_ObjectHideFlags: 0
