@@ -25,11 +25,17 @@ namespace InventorySystem.UI
             uiController = new UIController(uiModel, uiView, inventoryService, playerServ);
 
             EventService.Instance.UpdateUI.AddListener(uiController.UpdateUI);
+            EventService.Instance.OnSlotClicked.AddListener(uiController.UpdateTooltipUI);
+            EventService.Instance.OnInventoryToggle.AddListener(uiController.ToggleInventoryUI);
+            EventService.Instance.OnUIPopup.AddListener(uiController.HandleUIPopups);
         }
 
         ~UIService() 
         {
+            EventService.Instance.OnInventoryToggle.RemoveListener(uiController.ToggleInventoryUI);
             EventService.Instance.UpdateUI.RemoveListener(uiController.UpdateUI);
+            EventService.Instance.OnSlotClicked.RemoveListener(uiController.UpdateTooltipUI);
+            EventService.Instance.OnUIPopup.RemoveListener(uiController.HandleUIPopups);
         }
     }
 }

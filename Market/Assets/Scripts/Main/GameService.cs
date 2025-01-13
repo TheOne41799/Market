@@ -7,6 +7,7 @@ using InventorySystem.Shop;
 using InventorySystem.UI;
 using InventorySystem.Events;
 using UnityEngine;
+using System.Diagnostics;
 
 namespace InventorySystem.Main
 {
@@ -30,7 +31,14 @@ namespace InventorySystem.Main
         [SerializeField] private ItemDatabase itemDatabase;
         [SerializeField] private AudioDatabaseSO audioDatabase;
 
-        //todo - check for inventory full condition
+        //todo - create pop up menus for the following
+        //create an enum for all of the below actions
+        //  - inv full, no enough money, weight excedding
+        //  - yes/ no pop up for sell and purchase
+        //  - initially player will have no money - resources item
+        //  - When an item is in the shop, selecting that item should show it’s buying price
+        //  - When an item is in the inventory, selecting that should show it’s selling price
+        //  - overlay text indicating 'you bought or you sold', etc that stays for a few seconds
 
         private void Awake()
         {

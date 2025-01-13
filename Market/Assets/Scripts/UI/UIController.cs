@@ -1,6 +1,7 @@
 using InventorySystem.Inventory;
 using InventorySystem.Items;
 using InventorySystem.Player;
+using InventorySystem.Slot;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -34,6 +35,21 @@ namespace InventorySystem.UI
             view.UpdatePlayerMoneyText();
             view.UpdatePlayerInventorySizeText();
             view.UpdatePlayerInventoryWeightText();
+        }
+
+        public void UpdateTooltipUI(SlotView slotView)
+        {
+            view.UpdateItemTooltipUI(slotView.itemSO, slotView.slotType);
+        }
+
+        public void ToggleInventoryUI()
+        {
+            view.ToggleInventoryUI();
+        }
+
+        public void HandleUIPopups(UIPopup uIPopup)
+        {
+            view.HandlePopups(uIPopup);
         }
     }
 }

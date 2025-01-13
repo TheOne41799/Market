@@ -55,6 +55,7 @@ namespace InventorySystem.Shop
                 view.armourAndShieldSlots[i].quantity = itemDatabase.armourAndShieldItems[i].quantity;
 
                 view.armourAndShieldSlots[i].UpdateUISlot();
+                view.armourAndShieldSlots[i].slotType = SlotType.SHOP_ITEM;
             }
 
             for (int i = 0; i < view.weaponSlots.Length && i < itemDatabase.weaponItems.Count; i++)
@@ -63,6 +64,7 @@ namespace InventorySystem.Shop
                 view.weaponSlots[i].quantity = itemDatabase.weaponItems[i].quantity;
 
                 view.weaponSlots[i].UpdateUISlot();
+                view.weaponSlots[i].slotType = SlotType.SHOP_ITEM;
             }
 
             for (int i = 0; i < view.consumableSlots.Length && i < itemDatabase.consumableItems.Count; i++)
@@ -71,6 +73,7 @@ namespace InventorySystem.Shop
                 view.consumableSlots[i].quantity = itemDatabase.consumableItems[i].quantity;
 
                 view.consumableSlots[i].UpdateUISlot();
+                view.consumableSlots[i].slotType = SlotType.SHOP_ITEM;
             }
 
             for (int i = 0; i < view.treasureSlots.Length && i < itemDatabase.treasureItems.Count; i++)
@@ -79,6 +82,7 @@ namespace InventorySystem.Shop
                 view.treasureSlots[i].quantity = itemDatabase.treasureItems[i].quantity;
 
                 view.treasureSlots[i].UpdateUISlot();
+                view.treasureSlots[i].slotType = SlotType.SHOP_ITEM;
             }
 
             /*previouslySelectedSlot = null;
