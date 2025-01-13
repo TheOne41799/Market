@@ -3,6 +3,8 @@ using InventorySystem.Inventory;
 using InventorySystem.Items;
 using InventorySystem.Player;
 using InventorySystem.Slot;
+using InventorySystem.Audio;
+using InventorySystem.UI;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -105,7 +107,41 @@ namespace InventorySystem.Shop
 
         public void PurchaseItem()
         {
-            if (currentSelectedSlot == null || currentSelectedSlot.itemSO == null 
+            if(currentSelectedSlot == null)
+            {
+                EventService.Instance.OnUIPopup.InvokeEvent(UIPopup.SELECT_ITEM_TO_BUY_OR_SELL);
+                EventService.Instance.OnAudioEffectPlay.InvokeEvent(Audio.AudioTypes.ERROR, false);
+                return;
+            }
+
+            if(currentSelectedSlot.slotType == SlotType.INVENTORY_ITEM)
+            {
+                EventService.Instance.OnUIPopup.InvokeEvent(UIPopup.SELECT_SHOP_ITEM_TO_BUY);
+                EventService.Instance.OnAudioEffectPlay.InvokeEvent(Audio.AudioTypes.ERROR, false);
+                return;
+            }
+
+
+            //// ???????
+
+
+
+            //implement everything in order
+            if(currentSelectedSlot.itemSO.itemPurchasingPrice > playerService.GetPlayerMoney())
+            {
+                EventService.Instance.OnUIPopup.InvokeEvent(UIPopup.NOT_ENOUGH_MONEY);
+                EventService.Instance.OnAudioEffectPlay.InvokeEvent(Audio.AudioTypes.ERROR, false);
+                return;
+            }
+
+
+
+
+
+
+
+
+            /*if (currentSelectedSlot == null || currentSelectedSlot.itemSO == null 
                 || currentSelectedSlot.itemSO.itemPurchasingPrice > playerService.GetPlayerMoney()
                 || inventoryService.InventoryController.GetInventoryWeight()
                    + currentSelectedSlot.itemSO.itemWeight
@@ -116,7 +152,7 @@ namespace InventorySystem.Shop
             {
                 EventService.Instance.OnAudioEffectPlay.InvokeEvent(Audio.AudioTypes.ERROR, false);
                 return;
-            }
+            }*/
 
             /*if (currentSelectedSlot == null) return;
             if (currentSelectedSlot.itemSO == null) return;

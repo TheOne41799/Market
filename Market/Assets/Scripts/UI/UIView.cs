@@ -6,6 +6,8 @@ using InventorySystem.Player;
 using InventorySystem.Items;
 using UnityEngine.UI;
 using InventorySystem.Slot;
+using InventorySystem.Events;
+using InventorySystem.Audio;
 
 namespace InventorySystem.UI
 {
@@ -24,8 +26,15 @@ namespace InventorySystem.UI
         [SerializeField] private TextMeshProUGUI itemPurchaseOrSellPrice;
         [SerializeField] private TextMeshProUGUI itemWeight;
 
-        [SerializeField] private GameObject UIPopups;
-        [SerializeField] private List<GameObject> UIPopupsList;
+        [Header("UI Popups")]
+        [SerializeField] private GameObject uiPopupSelectAnItem;
+        [SerializeField] private Button uiPopupSelectAnItemCloseButton;
+
+        [SerializeField] private GameObject uiPopupSelectInventoryItemToSell;
+        [SerializeField] private Button uiPopupSelectInventoryItemToSellButton;
+
+        [SerializeField] private GameObject uiPopupSelectShopItemToBuy;
+        [SerializeField] private Button uiPopupSelectShopItemToBuyButton;
 
         private int playerMoney;
         private int playerInventorySize;
@@ -39,6 +48,14 @@ namespace InventorySystem.UI
             UpdatePlayerInventoryWeightText();
 
             ToggleInventoryUI();
+            ConnectUIPopupButtons();
+        }
+
+        private void ConnectUIPopupButtons()
+        {
+            uiPopupSelectAnItemCloseButton.onClick.AddListener(UIPopupSelectAnItemClose);
+            uiPopupSelectInventoryItemToSellButton.onClick.AddListener(UIPopupSelectInventoryItemToSellClose);
+            uiPopupSelectShopItemToBuyButton.onClick.AddListener(UIPopupSelectShopItemToBuyClose);
         }
 
         public void SetUIController(UIController controller)
@@ -102,17 +119,51 @@ namespace InventorySystem.UI
         {
             switch(uIPopup)
             {
+                case UIPopup.SELECT_ITEM_TO_BUY_OR_SELL:
+                    uiPopupSelectAnItem.SetActive(true);
+                    break;
+                case UIPopup.SELECT_INVENTORY_ITEM_TO_SELL:
+                    uiPopupSelectInventoryItemToSell.SetActive(true);
+                    break;
+                case UIPopup.SELECT_SHOP_ITEM_TO_BUY:
+                    uiPopupSelectShopItemToBuy.SetActive(true);
+                    break;
                 case UIPopup.INVENTORY_SIZE_OVERFLOW:
+                    Debug.Log("1");
                     break;
                 case UIPopup.INVENTORY_WEIGHT_OVERFLOW:
+                    Debug.Log("2");
                     break;
                 case UIPopup.NOT_ENOUGH_MONEY:
+                    Debug.Log("3");
                     break;
                 case UIPopup.CONFIRM_BUY_SELL:
+                    Debug.Log("4");
                     break;
                 case UIPopup.ITEM_PURCHASED_SOLD:
+                    Debug.Log("5");
                     break;
+                
+                
             }
+        }
+
+        private void UIPopupSelectAnItemClose()
+        {
+            EventService.Instance.OnAudioEffectPlay.InvokeEvent(AudioTypes.INVENTORY_ITEM_PURCHASED_AND_SOLD, false);
+            uiPopupSelectAnItem.SetActive(false);
+        }
+
+        private void UIPopupSelectInventoryItemToSellClose()
+        {
+            EventService.Instance.OnAudioEffectPlay.InvokeEvent(AudioTypes.INVENTORY_ITEM_PURCHASED_AND_SOLD, false);
+            uiPopupSelectInventoryItemToSell.SetActive(false);
+        }
+
+        private void UIPopupSelectShopItemToBuyClose()
+        {
+            EventService.Instance.OnAudioEffectPlay.InvokeEvent(AudioTypes.INVENTORY_ITEM_PURCHASED_AND_SOLD, false);
+            uiPopupSelectShopItemToBuy.SetActive(false);
         }
     }
 }

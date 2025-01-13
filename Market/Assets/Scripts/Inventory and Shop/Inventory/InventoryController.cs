@@ -89,12 +89,36 @@ namespace InventorySystem.Inventory
 
         public void SellItem()
         {
-            if (currentSelectedSlot == null || currentSelectedSlot.itemSO == null
+            if (currentSelectedSlot == null || currentSelectedSlot.itemSO == null)
+            {
+                EventService.Instance.OnUIPopup.InvokeEvent(UI.UIPopup.SELECT_ITEM_TO_BUY_OR_SELL);
+                EventService.Instance.OnAudioEffectPlay.InvokeEvent(Audio.AudioTypes.ERROR, false);
+                return;
+            }
+
+            if(currentSelectedSlot.slotType == SlotType.SHOP_ITEM)
+            {
+                EventService.Instance.OnUIPopup.InvokeEvent(UI.UIPopup.SELECT_INVENTORY_ITEM_TO_SELL);
+                EventService.Instance.OnAudioEffectPlay.InvokeEvent(Audio.AudioTypes.ERROR, false);
+                return;
+            }
+
+
+
+
+
+
+
+
+
+
+
+            /*if (currentSelectedSlot == null || currentSelectedSlot.itemSO == null
                 || currentSelectedSlot.gameObject.GetComponentInParent<ShopView>())
             {
                 EventService.Instance.OnAudioEffectPlay.InvokeEvent(Audio.AudioTypes.ERROR, false);
                 return;
-            }
+            }*/
 
             /*if (currentSelectedSlot == null)
             {
