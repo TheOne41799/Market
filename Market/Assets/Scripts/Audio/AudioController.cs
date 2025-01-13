@@ -1,8 +1,3 @@
-using InventorySystem.Audio;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace InventorySystem.Audio
@@ -53,7 +48,6 @@ namespace InventorySystem.Audio
                 Debug.LogError("No Audio Clip got selected");
             }
         }
-
 
         private AudioClip GetSoundClip(AudioTypes audioType)
         {

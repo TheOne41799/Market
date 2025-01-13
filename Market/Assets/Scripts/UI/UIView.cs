@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using InventorySystem.Player;
 using InventorySystem.Items;
 using UnityEngine.UI;
 using InventorySystem.Slot;
@@ -100,6 +97,24 @@ namespace InventorySystem.UI
             uiPopupItemSoldCloseButton.onClick.AddListener(UIPopupItemSoldClose);
         }
 
+        private void OnDestroy()
+        {
+            uiPopupSelectAnItemCloseButton.onClick.RemoveListener(UIPopupSelectAnItemClose);
+            uiPopupSelectInventoryItemToSellCloseButton.onClick.RemoveListener(UIPopupSelectInventoryItemToSellClose);
+            uiPopupSelectShopItemToBuyCloseButton.onClick.RemoveListener(UIPopupSelectShopItemToBuyClose);
+            uiPopupInventorySizeOverflowCloseButton.onClick.RemoveListener(UIPopupInventorySizeOverflowClose);
+            uiPopupInventoryWeightOverflowCloseButton.onClick.RemoveListener(UIPopupInventoryWeightOverflowClose);
+            uiPopupNotEnoughMoneyCloseButton.onClick.RemoveListener(UIPopupNotEnoughMoneyClose);
+
+            uiPopupInventoryConfirmBuyYesButton.onClick.RemoveListener(UIPopupConfirmBuyYes);
+            uiPopupInventoryConfirmBuyNoButton.onClick.RemoveListener(UIPopupConfirmBuyNo);
+            uiPopupItemPurchasedCloseButton.onClick.RemoveListener(UIPopupItemPurchasedClose);
+
+            uiPopupInventoryConfirmSellYesButton.onClick.RemoveListener(UIPopupConfirmSellYes);
+            uiPopupInventoryConfirmSellNoButton.onClick.RemoveListener(UIPopupConfirmSellNo);
+            uiPopupItemSoldCloseButton.onClick.RemoveListener(UIPopupItemSoldClose);
+        }
+
         public void SetUIController(UIController controller)
         {
             uiController = controller;
@@ -115,7 +130,6 @@ namespace InventorySystem.UI
         public void UpdatePlayerInventorySizeText()
         {
             playerInventorySize = uiController.inventoryController.GetInventorySize();
-            //Debug.Log(uiController.inventoryController.GetInventorySize());
 
             playerInventorySizeText.text = "InventorySize: " + playerInventorySize.ToString() + " / " +
                                             uiController.inventoryController.GetMaxInventorySize().ToString();
@@ -124,7 +138,6 @@ namespace InventorySystem.UI
         public void UpdatePlayerInventoryWeightText()
         {
             int playerInventoryWeight = uiController.inventoryController.GetInventoryWeight();
-            //Debug.Log(uiController.inventoryController.GetInventoryWeight());
 
             playerInventoryWeightText.text = "InventoryWeight: " + playerInventoryWeight.ToString() + "/ " + 
                                               uiController.inventoryController.GetMaxInventoryWeight().ToString();
@@ -194,8 +207,7 @@ namespace InventorySystem.UI
                 case UIPopup.ITEM_SOLD:
                     uiPopupItemSold.SetActive(true);
                     UIPopupItemSold(itemName.text.ToString(), itemPurchaseOrSellPrice.text.ToString());
-                    break;
-                
+                    break;                
             }
         }
 
@@ -239,7 +251,6 @@ namespace InventorySystem.UI
         {
             EventService.Instance.OnAudioEffectPlay.InvokeEvent(AudioTypes.INVENTORY_ITEM_PURCHASED_AND_SOLD, false);
 
-            //Debug.Log("Yes");
             EventService.Instance.OnConfirmBuy.InvokeEvent(true);
             uiPopupInventoryConfirmBuy.SetActive(false);
         }
@@ -248,7 +259,6 @@ namespace InventorySystem.UI
         {
             EventService.Instance.OnAudioEffectPlay.InvokeEvent(AudioTypes.INVENTORY_ITEM_PURCHASED_AND_SOLD, false);
 
-            //Debug.Log("No");
             EventService.Instance.OnConfirmBuy.InvokeEvent(false);
             uiPopupInventoryConfirmBuy.SetActive(false);
         }
@@ -257,9 +267,6 @@ namespace InventorySystem.UI
         {
             uiPopupInventoryConfirmBuyText.text = "Do you want to buy the following item?";
             uiPopInventoryBuyItemDetailsText.text = "'" + itemName + "' for a price of " + itemBuyPrice;
-
-            /*uiPopupItemPurchased.SetActive(true);
-            UIPopupItemPurchased(itemName, itemBuyPrice);*/
         }
 
         private void UIPopupItemPurchased(string itemName, string itemBuyPrice)
@@ -273,15 +280,10 @@ namespace InventorySystem.UI
             uiPopupItemPurchased.SetActive(false);
         }
 
-
-
-
-
         private void UIPopupConfirmSellYes()
         {
             EventService.Instance.OnAudioEffectPlay.InvokeEvent(AudioTypes.INVENTORY_ITEM_PURCHASED_AND_SOLD, false);
 
-            Debug.Log("Yes");
             EventService.Instance.OnConfirmSell.InvokeEvent(true);
             uiPopupInventoryConfirmSell.SetActive(false);
         }
@@ -290,7 +292,6 @@ namespace InventorySystem.UI
         {
             EventService.Instance.OnAudioEffectPlay.InvokeEvent(AudioTypes.INVENTORY_ITEM_PURCHASED_AND_SOLD, false);
 
-            Debug.Log("No");
             EventService.Instance.OnConfirmSell.InvokeEvent(false);
             uiPopupInventoryConfirmSell.SetActive(false);
         }
@@ -303,7 +304,7 @@ namespace InventorySystem.UI
 
         private void UIPopupItemSold(string itemName, string itemBuyPrice)
         {
-            uiPopupItemSoldText.text = "Sold '" + itemName + "' for a price of" + itemBuyPrice;
+            uiPopupItemSoldText.text = "Sold '" + itemName + "' for a price of " + itemBuyPrice;
         }
 
         private void UIPopupItemSoldClose()

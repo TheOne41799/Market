@@ -1,5 +1,4 @@
 
-
 namespace InventorySystem.Player
 {
     public class PlayerModel

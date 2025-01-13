@@ -1,5 +1,4 @@
 
-
 namespace InventorySystem.Audio
 {
     public enum AudioTypes

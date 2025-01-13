@@ -1,13 +1,9 @@
 using InventorySystem.Audio;
 using InventorySystem.Events;
 using InventorySystem.Items;
-using InventorySystem.Player;
-using InventorySystem.Shop;
 using InventorySystem.Slot;
 using InventorySystem.UI;
-using System;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 namespace InventorySystem.Inventory
 {
@@ -16,18 +12,13 @@ namespace InventorySystem.Inventory
         private InventoryModel model;
         private InventoryView view;
 
-        //is dependency injection needed for player service??????????
-        private PlayerService playerService;
-
         private SlotView currentSelectedSlot;
         private SlotView previouslySelectedSlot;
 
-        public InventoryController(InventoryModel model, InventoryView view, PlayerService service)
+        public InventoryController(InventoryModel model, InventoryView view)
         {
             this.model = model;
             this.view = view;
-
-            this.playerService = service;
 
             model.CurrentInventoryWeight = 0;
             model.CurrentInventorySize = 0;
@@ -36,11 +27,6 @@ namespace InventorySystem.Inventory
             ToggleInventoryUI();
 
             view.SetInventoryController(this);
-        }
-
-        public void Update()
-        {
-
         }
 
         public void ToggleInventoryUI()
@@ -80,7 +66,6 @@ namespace InventorySystem.Inventory
 
             currentSelectedSlot = slotView;
             currentSelectedSlot.bgImage.color = Color.red;
-            //currentSelectedSlot.slotType = SlotType.INVENTORY_ITEM;
         }
 
         private void PreviouslySelectedSlotBGColorReset()
@@ -111,52 +96,6 @@ namespace InventorySystem.Inventory
                 EventService.Instance.OnUIPopup.InvokeEvent(UIPopup.CONFIRM_SELL);
                 EventService.Instance.OnSlotClicked.InvokeEvent(currentSelectedSlot);
             }
-
-
-
-
-
-
-
-
-
-
-
-            /*if (currentSelectedSlot == null || currentSelectedSlot.itemSO == null
-                || currentSelectedSlot.gameObject.GetComponentInParent<ShopView>())
-            {
-                EventService.Instance.OnAudioEffectPlay.InvokeEvent(Audio.AudioTypes.ERROR, false);
-                return;
-            }*/
-
-            /*if (currentSelectedSlot == null)
-            {
-                EventService.Instance.OnAudioEffectPlay.InvokeEvent(Audio.AudioTypes.ERROR, false);
-                return;
-            }*/
-
-
-
-
-
-
-
-
-
-
-            //This is the code to sell
-            /*if (currentSelectedSlot.gameObject.GetComponentInParent<InventoryView>())
-            {
-                EventService.Instance.OnItemSold.InvokeEvent(currentSelectedSlot.itemSO.itemSellingPrice);
-                EventService.Instance.OnAudioEffectPlay.InvokeEvent(
-                    Audio.AudioTypes.INVENTORY_ITEM_PURCHASED_AND_SOLD,
-                    false);
-
-                InventoryWeightOnItemSell(currentSelectedSlot.itemSO.itemWeight);
-
-                currentSelectedSlot.itemSO = null;
-                currentSelectedSlot.UpdateUISlot();
-            }*/
         }
 
         public void DoSellItem(bool doSellItem)
@@ -165,12 +104,10 @@ namespace InventorySystem.Inventory
             {
                 SellItem();
             }
-            Debug.Log("No");
         }
 
         private void SellItem()
         {
-            Debug.Log("Yes");
             EventService.Instance.OnItemSold.InvokeEvent(currentSelectedSlot.itemSO.itemSellingPrice);
             EventService.Instance.OnAudioEffectPlay.InvokeEvent(
                 Audio.AudioTypes.INVENTORY_ITEM_PURCHASED_AND_SOLD,
@@ -200,7 +137,6 @@ namespace InventorySystem.Inventory
         {
             model.CurrentInventoryWeight += weight;
             model.CurrentInventorySize++;
-            //Debug.Log(model.InventoryWeight);
 
             EventService.Instance.UpdateUI.InvokeEvent();
         }
@@ -209,24 +145,9 @@ namespace InventorySystem.Inventory
         {
             model.CurrentInventoryWeight -= weight;
             model.CurrentInventorySize--;
-            //Debug.Log(model.InventoryWeight);
+
             EventService.Instance.UpdateUI.InvokeEvent();
         }
-
-        /*public void InventoryOnItemPickUp(ItemSO itemSO, int quantity)
-        {
-            if (model.CurrentInventoryWeight + itemSO.itemWeight > model.MaxInventoryWeight 
-                || model.CurrentInventorySize >= model.MaxInventorySize)
-            {
-                Debug.Log("Inventory cant carry anymore weight");
-                return;
-            }
-            AddItem(itemSO, itemSO.quantity);
-            InventoryWeightOnPurchase(itemSO.itemWeight);
-
-            model.CurrentInventoryWeight += itemSO.itemWeight;
-            model.CurrentInventorySize++;
-        }*/
 
         public int GetInventorySize()
         {

@@ -1,4 +1,3 @@
-using InventorySystem.Slot;
 
 namespace InventorySystem.Inventory
 {

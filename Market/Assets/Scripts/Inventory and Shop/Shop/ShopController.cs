@@ -5,16 +5,12 @@ using InventorySystem.Player;
 using InventorySystem.Slot;
 using InventorySystem.Audio;
 using InventorySystem.UI;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace InventorySystem.Shop
 {
     public class ShopController
     {
-        private ShopModel model;
         private ShopView view;
         private ItemDatabase itemDatabase;
 
@@ -24,9 +20,8 @@ namespace InventorySystem.Shop
         private SlotView currentSelectedSlot;
         private SlotView previouslySelectedSlot;
 
-        public ShopController(ShopModel model, ShopView view, ItemDatabase database, PlayerService service, InventoryService inventoryService)
+        public ShopController(ShopView view, ItemDatabase database, PlayerService service, InventoryService inventoryService)
         {
-            this.model = model;
             this.view = view;
             this.itemDatabase = database;
             this.playerService = service;
@@ -37,11 +32,6 @@ namespace InventorySystem.Shop
 
             view.SetShopController(this);
             
-        }
-
-        public void Update()
-        {
-
         }
 
         public void ToggleInventoryUI()
@@ -86,9 +76,6 @@ namespace InventorySystem.Shop
                 view.treasureSlots[i].UpdateUISlot();
                 view.treasureSlots[i].slotType = SlotType.SHOP_ITEM;
             }
-
-            /*previouslySelectedSlot = null;
-            currentSelectedSlot = null;*/
         }
 
         public void CurrentSelectedSlot(SlotView slotView)
@@ -151,58 +138,6 @@ namespace InventorySystem.Shop
                 EventService.Instance.OnUIPopup.InvokeEvent(UIPopup.CONFIRM_BUY);
                 EventService.Instance.OnSlotClicked.InvokeEvent(currentSelectedSlot);
             }
-
-
-
-
-
-
-            /*if (currentSelectedSlot == null || currentSelectedSlot.itemSO == null 
-                || currentSelectedSlot.itemSO.itemPurchasingPrice > playerService.GetPlayerMoney()
-                || inventoryService.InventoryController.GetInventoryWeight()
-                   + currentSelectedSlot.itemSO.itemWeight
-                   > inventoryService.InventoryController.GetMaxInventoryWeight()
-                || inventoryService.InventoryController.GetInventorySize()
-                   >= inventoryService.InventoryController.GetMaxInventorySize()
-                || currentSelectedSlot.gameObject.GetComponentInParent<InventoryView>())
-            {
-                EventService.Instance.OnAudioEffectPlay.InvokeEvent(Audio.AudioTypes.ERROR, false);
-                return;
-            }*/
-
-            /*if (currentSelectedSlot == null) return;
-            if (currentSelectedSlot.itemSO == null) return;
-
-            if (currentSelectedSlot.itemSO.itemPurchasingPrice > playerService.GetPlayerMoney()) return;
-
-            if (inventoryService.InventoryController.GetInventoryWeight()
-                + currentSelectedSlot.itemSO.itemWeight 
-                > inventoryService.InventoryController.GetMaxInventoryWeight()) 
-                return;
-
-            if (inventoryService.InventoryController.GetInventorySize()
-                >= inventoryService.InventoryController.GetMaxInventorySize()) 
-                return;*/
-
-
-
-
-
-
-
-
-            // This is the code to Buy
-            /*if (currentSelectedSlot.gameObject.GetComponentInParent<ShopView>())
-            {
-                EventService.Instance.OnItemPurchased.InvokeEvent(currentSelectedSlot.itemSO.itemPurchasingPrice);
-                EventService.Instance.OnInventoryUpdate.InvokeEvent(currentSelectedSlot.itemSO);
-                EventService.Instance.OnAudioEffectPlay.InvokeEvent(
-                    Audio.AudioTypes.INVENTORY_ITEM_PURCHASED_AND_SOLD,
-                    false);
-
-                //currentSelectedSlot.itemSO = null;
-                currentSelectedSlot.UpdateUISlot();            
-            }*/
         }
 
         public void DoBuyItem(bool doBuyItem)
@@ -211,12 +146,10 @@ namespace InventorySystem.Shop
             {
                 BuyItem();
             }
-            Debug.Log("Yes");
         }
 
         private void BuyItem()
         {
-            Debug.Log("Yes");
             EventService.Instance.OnItemPurchased.InvokeEvent(currentSelectedSlot.itemSO.itemPurchasingPrice);
             EventService.Instance.OnInventoryUpdate.InvokeEvent(currentSelectedSlot.itemSO);
             EventService.Instance.OnAudioEffectPlay.InvokeEvent(
@@ -224,7 +157,9 @@ namespace InventorySystem.Shop
                 false);
             EventService.Instance.OnUIPopup.InvokeEvent(UIPopup.ITEM_PURCHASED);
 
+            //Needed if you need to remove the item from shop
             //currentSelectedSlot.itemSO = null;
+
             currentSelectedSlot.UpdateUISlot();
         }
 

@@ -1,6 +1,4 @@
 
-
-
 namespace InventorySystem.Slot
 {
     public enum SlotType

@@ -1,6 +1,4 @@
-using InventorySystem.Audio;
 using System;
-
 
 namespace InventorySystem.Events
 {

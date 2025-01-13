@@ -16,13 +16,12 @@ namespace InventorySystem.Shop
 
         public ShopService(ShopView shopViewPrefab, ItemDatabase database, PlayerService service, InventoryService invService) 
         {
-            var ShopModel = new ShopModel();
             var shopView = GameObject.Instantiate(shopViewPrefab);
 
             this.playerService = service;
             this.inventoryService = invService;
 
-            shopController = new ShopController(ShopModel, shopView, database, playerService, inventoryService);
+            shopController = new ShopController(shopView, database, playerService, inventoryService);
 
             EventService.Instance.OnInventoryToggle.AddListener(shopController.ToggleInventoryUI);
             EventService.Instance.OnSlotClicked.AddListener(shopController.CurrentSelectedSlot);
@@ -34,11 +33,6 @@ namespace InventorySystem.Shop
             EventService.Instance.OnInventoryToggle.RemoveListener(shopController.ToggleInventoryUI);
             EventService.Instance.OnSlotClicked.RemoveListener(shopController.CurrentSelectedSlot);
             EventService.Instance.OnConfirmBuy.RemoveListener(shopController.DoBuyItem);
-        }
-
-        public void Update()
-        {
-            shopController?.Update();
         }
     }
 }

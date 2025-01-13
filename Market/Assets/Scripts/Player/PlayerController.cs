@@ -19,11 +19,6 @@ namespace InventorySystem.Player
             view.Move(movement * model.Speed * Time.deltaTime);
         }
 
-        public void Update()
-        {
-
-        }
-
         public int GetPlayerMoney()
         {
             return model.PlayerMoney;
@@ -32,7 +27,6 @@ namespace InventorySystem.Player
         public void DeductPlayerMoney(int price)
         {
             model.PlayerMoney -= price;
-            //Debug.Log(model.PlayerMoney);
 
             EventService.Instance.UpdateUI.InvokeEvent();
         }
@@ -40,7 +34,6 @@ namespace InventorySystem.Player
         public void AddPlayerMoney(int price)
         {
             model.PlayerMoney += price;
-            //Debug.Log(model.PlayerMoney);
 
             EventService.Instance.UpdateUI.InvokeEvent();
         }
