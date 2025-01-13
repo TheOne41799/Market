@@ -31,10 +31,41 @@ namespace InventorySystem.UI
         [SerializeField] private Button uiPopupSelectAnItemCloseButton;
 
         [SerializeField] private GameObject uiPopupSelectInventoryItemToSell;
-        [SerializeField] private Button uiPopupSelectInventoryItemToSellButton;
+        [SerializeField] private Button uiPopupSelectInventoryItemToSellCloseButton;
 
         [SerializeField] private GameObject uiPopupSelectShopItemToBuy;
-        [SerializeField] private Button uiPopupSelectShopItemToBuyButton;
+        [SerializeField] private Button uiPopupSelectShopItemToBuyCloseButton;
+
+        [SerializeField] private GameObject uiPopupInventorySizeOverflow;
+        [SerializeField] private Button uiPopupInventorySizeOverflowCloseButton;
+
+        [SerializeField] private GameObject uiPopupInventoryWeightOverflow;
+        [SerializeField] private Button uiPopupInventoryWeightOverflowCloseButton;
+
+        [SerializeField] private GameObject uiPopupNotEnoughMoney;
+        [SerializeField] private Button uiPopupNotEnoughMoneyCloseButton;
+
+        [SerializeField] private GameObject uiPopupInventoryConfirmBuy;
+        [SerializeField] private Button uiPopupInventoryConfirmBuyYesButton;
+        [SerializeField] private Button uiPopupInventoryConfirmBuyNoButton;
+        [SerializeField] private TextMeshProUGUI uiPopupInventoryConfirmBuyText;
+        [SerializeField] private TextMeshProUGUI uiPopInventoryBuyItemDetailsText;
+
+        [SerializeField] private GameObject uiPopupItemPurchased;
+        [SerializeField] private TextMeshProUGUI uiPopupItemPurchasedText;
+        [SerializeField] private Button uiPopupItemPurchasedCloseButton;
+
+        [SerializeField] private GameObject uiPopupInventoryConfirmSell;
+        [SerializeField] private Button uiPopupInventoryConfirmSellYesButton;
+        [SerializeField] private Button uiPopupInventoryConfirmSellNoButton;
+        [SerializeField] private TextMeshProUGUI uiPopupInventoryConfirmSellText;
+        [SerializeField] private TextMeshProUGUI uiPopInventorySellItemDetailsText;
+
+        [SerializeField] private GameObject uiPopupItemSold;
+        [SerializeField] private TextMeshProUGUI uiPopupItemSoldText;
+        [SerializeField] private Button uiPopupItemSoldCloseButton;
+
+
 
         private int playerMoney;
         private int playerInventorySize;
@@ -54,8 +85,19 @@ namespace InventorySystem.UI
         private void ConnectUIPopupButtons()
         {
             uiPopupSelectAnItemCloseButton.onClick.AddListener(UIPopupSelectAnItemClose);
-            uiPopupSelectInventoryItemToSellButton.onClick.AddListener(UIPopupSelectInventoryItemToSellClose);
-            uiPopupSelectShopItemToBuyButton.onClick.AddListener(UIPopupSelectShopItemToBuyClose);
+            uiPopupSelectInventoryItemToSellCloseButton.onClick.AddListener(UIPopupSelectInventoryItemToSellClose);
+            uiPopupSelectShopItemToBuyCloseButton.onClick.AddListener(UIPopupSelectShopItemToBuyClose);
+            uiPopupInventorySizeOverflowCloseButton.onClick.AddListener(UIPopupInventorySizeOverflowClose);
+            uiPopupInventoryWeightOverflowCloseButton.onClick.AddListener(UIPopupInventoryWeightOverflowClose);
+            uiPopupNotEnoughMoneyCloseButton.onClick.AddListener(UIPopupNotEnoughMoneyClose);
+
+            uiPopupInventoryConfirmBuyYesButton.onClick.AddListener(UIPopupConfirmBuyYes);
+            uiPopupInventoryConfirmBuyNoButton.onClick.AddListener(UIPopupConfirmBuyNo);
+            uiPopupItemPurchasedCloseButton.onClick.AddListener(UIPopupItemPurchasedClose);
+
+            uiPopupInventoryConfirmSellYesButton.onClick.AddListener(UIPopupConfirmSellYes);
+            uiPopupInventoryConfirmSellNoButton.onClick.AddListener(UIPopupConfirmSellNo);
+            uiPopupItemSoldCloseButton.onClick.AddListener(UIPopupItemSoldClose);
         }
 
         public void SetUIController(UIController controller)
@@ -129,21 +171,30 @@ namespace InventorySystem.UI
                     uiPopupSelectShopItemToBuy.SetActive(true);
                     break;
                 case UIPopup.INVENTORY_SIZE_OVERFLOW:
-                    Debug.Log("1");
+                    uiPopupInventorySizeOverflow.SetActive(true);
                     break;
                 case UIPopup.INVENTORY_WEIGHT_OVERFLOW:
-                    Debug.Log("2");
+                    uiPopupInventoryWeightOverflow.SetActive(true);
                     break;
                 case UIPopup.NOT_ENOUGH_MONEY:
-                    Debug.Log("3");
+                    uiPopupNotEnoughMoney.SetActive(true);
                     break;
-                case UIPopup.CONFIRM_BUY_SELL:
-                    Debug.Log("4");
+                case UIPopup.CONFIRM_BUY:
+                    uiPopupInventoryConfirmBuy.SetActive(true);
+                    ConfirmBuyPopupTextDetails(itemName.text.ToString(), itemPurchaseOrSellPrice.text.ToString());
                     break;
-                case UIPopup.ITEM_PURCHASED_SOLD:
-                    Debug.Log("5");
+                case UIPopup.CONFIRM_SELL:
+                    uiPopupInventoryConfirmSell.SetActive(true);
+                    ConfirmSellPopupTextDetails(itemName.text.ToString(), itemPurchaseOrSellPrice.text.ToString());
                     break;
-                
+                case UIPopup.ITEM_PURCHASED:
+                    uiPopupItemPurchased.SetActive(true);
+                    UIPopupItemPurchased(itemName.text.ToString(), itemPurchaseOrSellPrice.text.ToString());
+                    break;
+                case UIPopup.ITEM_SOLD:
+                    uiPopupItemSold.SetActive(true);
+                    UIPopupItemSold(itemName.text.ToString(), itemPurchaseOrSellPrice.text.ToString());
+                    break;
                 
             }
         }
@@ -164,6 +215,101 @@ namespace InventorySystem.UI
         {
             EventService.Instance.OnAudioEffectPlay.InvokeEvent(AudioTypes.INVENTORY_ITEM_PURCHASED_AND_SOLD, false);
             uiPopupSelectShopItemToBuy.SetActive(false);
+        }
+
+        private void UIPopupInventorySizeOverflowClose()
+        {
+            EventService.Instance.OnAudioEffectPlay.InvokeEvent(AudioTypes.INVENTORY_ITEM_PURCHASED_AND_SOLD, false);
+            uiPopupInventorySizeOverflow.SetActive(false);
+        }
+
+        private void UIPopupInventoryWeightOverflowClose()
+        {
+            EventService.Instance.OnAudioEffectPlay.InvokeEvent(AudioTypes.INVENTORY_ITEM_PURCHASED_AND_SOLD, false);
+            uiPopupInventoryWeightOverflow.SetActive(false);
+        }
+
+        private void UIPopupNotEnoughMoneyClose()
+        {
+            EventService.Instance.OnAudioEffectPlay.InvokeEvent(AudioTypes.INVENTORY_ITEM_PURCHASED_AND_SOLD, false);
+            uiPopupNotEnoughMoney.SetActive(false);
+        }
+
+        private void UIPopupConfirmBuyYes()
+        {
+            EventService.Instance.OnAudioEffectPlay.InvokeEvent(AudioTypes.INVENTORY_ITEM_PURCHASED_AND_SOLD, false);
+
+            //Debug.Log("Yes");
+            EventService.Instance.OnConfirmBuy.InvokeEvent(true);
+            uiPopupInventoryConfirmBuy.SetActive(false);
+        }
+
+        private void UIPopupConfirmBuyNo()
+        {
+            EventService.Instance.OnAudioEffectPlay.InvokeEvent(AudioTypes.INVENTORY_ITEM_PURCHASED_AND_SOLD, false);
+
+            //Debug.Log("No");
+            EventService.Instance.OnConfirmBuy.InvokeEvent(false);
+            uiPopupInventoryConfirmBuy.SetActive(false);
+        }
+
+        private void ConfirmBuyPopupTextDetails(string itemName, string itemBuyPrice)
+        {
+            uiPopupInventoryConfirmBuyText.text = "Do you want to buy the following item?";
+            uiPopInventoryBuyItemDetailsText.text = "'" + itemName + "' for a price of " + itemBuyPrice;
+
+            /*uiPopupItemPurchased.SetActive(true);
+            UIPopupItemPurchased(itemName, itemBuyPrice);*/
+        }
+
+        private void UIPopupItemPurchased(string itemName, string itemBuyPrice)
+        {
+            uiPopupItemPurchasedText.text = "Purchased '" + itemName + "' for a price of " + itemBuyPrice;
+        }
+
+        private void UIPopupItemPurchasedClose()
+        {
+            EventService.Instance.OnAudioEffectPlay.InvokeEvent(AudioTypes.INVENTORY_ITEM_PURCHASED_AND_SOLD, false);
+            uiPopupItemPurchased.SetActive(false);
+        }
+
+
+
+
+
+        private void UIPopupConfirmSellYes()
+        {
+            EventService.Instance.OnAudioEffectPlay.InvokeEvent(AudioTypes.INVENTORY_ITEM_PURCHASED_AND_SOLD, false);
+
+            Debug.Log("Yes");
+            EventService.Instance.OnConfirmSell.InvokeEvent(true);
+            uiPopupInventoryConfirmSell.SetActive(false);
+        }
+
+        private void UIPopupConfirmSellNo()
+        {
+            EventService.Instance.OnAudioEffectPlay.InvokeEvent(AudioTypes.INVENTORY_ITEM_PURCHASED_AND_SOLD, false);
+
+            Debug.Log("No");
+            EventService.Instance.OnConfirmSell.InvokeEvent(false);
+            uiPopupInventoryConfirmSell.SetActive(false);
+        }
+
+        private void ConfirmSellPopupTextDetails(string itemName, string itemSellPrice)
+        {
+            uiPopupInventoryConfirmSellText.text = "Do you want to sell the following item?";
+            uiPopInventorySellItemDetailsText.text = "'" + itemName + "' for a price of " + itemSellPrice;
+        }
+
+        private void UIPopupItemSold(string itemName, string itemBuyPrice)
+        {
+            uiPopupItemSoldText.text = "Sold '" + itemName + "' for a price of" + itemBuyPrice;
+        }
+
+        private void UIPopupItemSoldClose()
+        {
+            EventService.Instance.OnAudioEffectPlay.InvokeEvent(AudioTypes.INVENTORY_ITEM_PURCHASED_AND_SOLD, false);
+            uiPopupItemSold.SetActive(false);
         }
     }
 }

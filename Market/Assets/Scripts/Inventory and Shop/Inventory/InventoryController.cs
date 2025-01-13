@@ -1,8 +1,10 @@
+using InventorySystem.Audio;
 using InventorySystem.Events;
 using InventorySystem.Items;
 using InventorySystem.Player;
 using InventorySystem.Shop;
 using InventorySystem.Slot;
+using InventorySystem.UI;
 using System;
 using UnityEngine;
 using static UnityEditor.Progress;
@@ -87,7 +89,7 @@ namespace InventorySystem.Inventory
             if (previouslySelectedSlot != null) previouslySelectedSlot.bgImage.color = Color.white;
         }
 
-        public void SellItem()
+        public void SellItemChecks()
         {
             if (currentSelectedSlot == null || currentSelectedSlot.itemSO == null)
             {
@@ -101,6 +103,13 @@ namespace InventorySystem.Inventory
                 EventService.Instance.OnUIPopup.InvokeEvent(UI.UIPopup.SELECT_INVENTORY_ITEM_TO_SELL);
                 EventService.Instance.OnAudioEffectPlay.InvokeEvent(Audio.AudioTypes.ERROR, false);
                 return;
+            }
+
+            if(currentSelectedSlot.slotType == SlotType.INVENTORY_ITEM)
+            {
+                EventService.Instance.OnAudioEffectPlay.InvokeEvent(AudioTypes.INVENTORY_ITEM_PURCHASED_AND_SOLD, false);
+                EventService.Instance.OnUIPopup.InvokeEvent(UIPopup.CONFIRM_SELL);
+                EventService.Instance.OnSlotClicked.InvokeEvent(currentSelectedSlot);
             }
 
 
@@ -126,7 +135,17 @@ namespace InventorySystem.Inventory
                 return;
             }*/
 
-            if (currentSelectedSlot.gameObject.GetComponentInParent<InventoryView>())
+
+
+
+
+
+
+
+
+
+            //This is the code to sell
+            /*if (currentSelectedSlot.gameObject.GetComponentInParent<InventoryView>())
             {
                 EventService.Instance.OnItemSold.InvokeEvent(currentSelectedSlot.itemSO.itemSellingPrice);
                 EventService.Instance.OnAudioEffectPlay.InvokeEvent(
@@ -137,7 +156,31 @@ namespace InventorySystem.Inventory
 
                 currentSelectedSlot.itemSO = null;
                 currentSelectedSlot.UpdateUISlot();
+            }*/
+        }
+
+        public void DoSellItem(bool doSellItem)
+        {
+            if(doSellItem)
+            {
+                SellItem();
             }
+            Debug.Log("No");
+        }
+
+        private void SellItem()
+        {
+            Debug.Log("Yes");
+            EventService.Instance.OnItemSold.InvokeEvent(currentSelectedSlot.itemSO.itemSellingPrice);
+            EventService.Instance.OnAudioEffectPlay.InvokeEvent(
+                Audio.AudioTypes.INVENTORY_ITEM_PURCHASED_AND_SOLD,
+                false);
+            EventService.Instance.OnUIPopup.InvokeEvent(UIPopup.ITEM_SOLD);
+
+            InventoryWeightOnItemSell(currentSelectedSlot.itemSO.itemWeight);
+
+            currentSelectedSlot.itemSO = null;
+            currentSelectedSlot.UpdateUISlot();
         }
 
         public void UpdateInventory(ItemSO itemSO)

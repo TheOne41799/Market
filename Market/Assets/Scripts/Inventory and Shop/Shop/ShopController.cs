@@ -105,7 +105,7 @@ namespace InventorySystem.Shop
             if (previouslySelectedSlot != null) previouslySelectedSlot.bgImage.color = Color.white;
         }
 
-        public void PurchaseItem()
+        public void BuyItemChecks()
         {
             if(currentSelectedSlot == null)
             {
@@ -114,27 +114,43 @@ namespace InventorySystem.Shop
                 return;
             }
 
-            if(currentSelectedSlot.slotType == SlotType.INVENTORY_ITEM)
+            if (currentSelectedSlot.slotType == SlotType.INVENTORY_ITEM)
             {
                 EventService.Instance.OnUIPopup.InvokeEvent(UIPopup.SELECT_SHOP_ITEM_TO_BUY);
                 EventService.Instance.OnAudioEffectPlay.InvokeEvent(Audio.AudioTypes.ERROR, false);
                 return;
             }
 
+            if (inventoryService.InventoryController.GetInventorySize()
+               >= inventoryService.InventoryController.GetMaxInventorySize())
+            {
+                EventService.Instance.OnUIPopup.InvokeEvent(UIPopup.INVENTORY_SIZE_OVERFLOW);
+                EventService.Instance.OnAudioEffectPlay.InvokeEvent(Audio.AudioTypes.ERROR, false);
+                return;
+            }
 
-            //// ???????
+            if(inventoryService.InventoryController.GetInventoryWeight()
+                   + currentSelectedSlot.itemSO.itemWeight
+                   > inventoryService.InventoryController.GetMaxInventoryWeight())
+            {
+                EventService.Instance.OnUIPopup.InvokeEvent(UIPopup.INVENTORY_WEIGHT_OVERFLOW);
+                EventService.Instance.OnAudioEffectPlay.InvokeEvent(Audio.AudioTypes.ERROR, false);
+                return;
+            }
 
-
-
-            //implement everything in order
             if(currentSelectedSlot.itemSO.itemPurchasingPrice > playerService.GetPlayerMoney())
             {
                 EventService.Instance.OnUIPopup.InvokeEvent(UIPopup.NOT_ENOUGH_MONEY);
                 EventService.Instance.OnAudioEffectPlay.InvokeEvent(Audio.AudioTypes.ERROR, false);
                 return;
+            }            
+
+            if(currentSelectedSlot.slotType == SlotType.SHOP_ITEM)
+            {
+                EventService.Instance.OnAudioEffectPlay.InvokeEvent(AudioTypes.INVENTORY_ITEM_PURCHASED_AND_SOLD, false);
+                EventService.Instance.OnUIPopup.InvokeEvent(UIPopup.CONFIRM_BUY);
+                EventService.Instance.OnSlotClicked.InvokeEvent(currentSelectedSlot);
             }
-
-
 
 
 
@@ -168,7 +184,15 @@ namespace InventorySystem.Shop
                 >= inventoryService.InventoryController.GetMaxInventorySize()) 
                 return;*/
 
-            if (currentSelectedSlot.gameObject.GetComponentInParent<ShopView>())
+
+
+
+
+
+
+
+            // This is the code to Buy
+            /*if (currentSelectedSlot.gameObject.GetComponentInParent<ShopView>())
             {
                 EventService.Instance.OnItemPurchased.InvokeEvent(currentSelectedSlot.itemSO.itemPurchasingPrice);
                 EventService.Instance.OnInventoryUpdate.InvokeEvent(currentSelectedSlot.itemSO);
@@ -178,7 +202,30 @@ namespace InventorySystem.Shop
 
                 //currentSelectedSlot.itemSO = null;
                 currentSelectedSlot.UpdateUISlot();            
+            }*/
+        }
+
+        public void DoBuyItem(bool doBuyItem)
+        {
+            if(doBuyItem)
+            {
+                BuyItem();
             }
+            Debug.Log("Yes");
+        }
+
+        private void BuyItem()
+        {
+            Debug.Log("Yes");
+            EventService.Instance.OnItemPurchased.InvokeEvent(currentSelectedSlot.itemSO.itemPurchasingPrice);
+            EventService.Instance.OnInventoryUpdate.InvokeEvent(currentSelectedSlot.itemSO);
+            EventService.Instance.OnAudioEffectPlay.InvokeEvent(
+                Audio.AudioTypes.INVENTORY_ITEM_PURCHASED_AND_SOLD,
+                false);
+            EventService.Instance.OnUIPopup.InvokeEvent(UIPopup.ITEM_PURCHASED);
+
+            //currentSelectedSlot.itemSO = null;
+            currentSelectedSlot.UpdateUISlot();
         }
 
         public void ToggleUI(int index)

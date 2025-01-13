@@ -27,6 +27,7 @@ namespace InventorySystem.Inventory
 
             EventService.Instance.OnSlotClicked.AddListener(InventoryController.CurrentSelectedSlot);
             EventService.Instance.OnInventoryUpdate.AddListener(InventoryController.UpdateInventory);
+            EventService.Instance.OnConfirmSell.AddListener(InventoryController.DoSellItem);
         }
 
         ~InventoryService()
@@ -35,6 +36,7 @@ namespace InventorySystem.Inventory
             //EventService.Instance.OnItemLooted.RemoveListener(InventoryController.AddItem);
             EventService.Instance.OnSlotClicked.RemoveListener(InventoryController.CurrentSelectedSlot);
             EventService.Instance.OnInventoryUpdate.RemoveListener(InventoryController.UpdateInventory);
+            EventService.Instance.OnConfirmSell.RemoveListener(InventoryController .DoSellItem);
         }
 
         public void Update()

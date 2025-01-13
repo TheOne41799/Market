@@ -16,7 +16,7 @@ MonoBehaviour:
   itemDescription: This is a turtle shield
   itemIcon: {fileID: 21300000, guid: 847c9b22e5ec469479631df1e10b085d, type: 3}
   itemSellingPrice: 45
-  itemPurchasingPrice: 25
+  itemPurchasingPrice: 140
   itemWeight: 10
   itemType: 1
   quantity: 1
