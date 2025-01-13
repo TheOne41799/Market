@@ -37,7 +37,6 @@ namespace InventorySystem.Main
             inventoryService = new InventoryService(inventoryViewPrefab);
             shopService = new ShopService(shopViewPrefab, itemDatabase, playerService, inventoryService);
             uiService = new UIService(uiViewPrefab, inventoryService, playerService);
-
             audioService = new AudioService(audioViewPrefab, audioDatabase);
 
             Initialization();
