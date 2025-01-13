@@ -33,6 +33,8 @@ namespace InventorySystem.Events
         public GameEventController<AudioTypes, bool> OnBackgroundMusicPlay { get; }
         public GameEventController<AudioTypes, bool> OnAudioEffectPlay { get; }
         public GameEventController<UIPopup> OnUIPopup { get; }
+        public GameEventController<bool> OnConfirmBuy { get; }
+        public GameEventController<bool> OnConfirmSell { get; }
 
 
         public EventService()
@@ -48,6 +50,8 @@ namespace InventorySystem.Events
             OnBackgroundMusicPlay = new GameEventController<AudioTypes, bool>();
             OnAudioEffectPlay = new GameEventController<AudioTypes, bool>();
             OnUIPopup = new GameEventController<UIPopup>();
+            OnConfirmBuy = new GameEventController<bool>();
+            OnConfirmSell = new GameEventController<bool>();
         }
     }
 }

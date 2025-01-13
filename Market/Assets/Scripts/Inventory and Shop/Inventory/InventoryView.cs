@@ -15,7 +15,7 @@ namespace InventorySystem.Inventory
         private void Start()
         {
             // set script execution order
-            sellButton.onClick.AddListener(inventoryController.SellItem);
+            sellButton.onClick.AddListener(inventoryController.SellItemChecks);
         }
 
         public void SetInventoryController(InventoryController controller)

@@ -26,12 +26,14 @@ namespace InventorySystem.Shop
 
             EventService.Instance.OnInventoryToggle.AddListener(shopController.ToggleInventoryUI);
             EventService.Instance.OnSlotClicked.AddListener(shopController.CurrentSelectedSlot);
+            EventService.Instance.OnConfirmBuy.AddListener(shopController.DoBuyItem);
         }
 
         ~ShopService()
         {
             EventService.Instance.OnInventoryToggle.RemoveListener(shopController.ToggleInventoryUI);
             EventService.Instance.OnSlotClicked.RemoveListener(shopController.CurrentSelectedSlot);
+            EventService.Instance.OnConfirmBuy.RemoveListener(shopController.DoBuyItem);
         }
 
         public void Update()

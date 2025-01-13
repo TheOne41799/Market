@@ -29,7 +29,7 @@ namespace InventorySystem.Shop
         private void Start()
         {
             // set script execution order - is it needed?
-            purchaseButton.onClick.AddListener(shopController.PurchaseItem);
+            purchaseButton.onClick.AddListener(shopController.BuyItemChecks);
 
             for (int i = 0; i < toggleButtons.Length; i++)
             {
