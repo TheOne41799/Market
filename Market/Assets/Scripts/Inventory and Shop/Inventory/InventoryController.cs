@@ -52,6 +52,8 @@ namespace InventorySystem.Inventory
             foreach (var slot in view.itemSlots)
             {
                 slot.UpdateUISlot();
+
+                slot.slotType = SlotType.INVENTORY_ITEM;
             }
         }
 
@@ -76,6 +78,7 @@ namespace InventorySystem.Inventory
 
             currentSelectedSlot = slotView;
             currentSelectedSlot.bgImage.color = Color.red;
+            //currentSelectedSlot.slotType = SlotType.INVENTORY_ITEM;
         }
 
         private void PreviouslySelectedSlotBGColorReset()

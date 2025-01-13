@@ -14,6 +14,7 @@ namespace InventorySystem.Slot
         public ItemSO itemSO;
         public int quantity;
         public Image bgImage;
+        public SlotType slotType;
 
         [SerializeField] private Image itemIcon;        
         [SerializeField] private TextMeshProUGUI quantityText;
