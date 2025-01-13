@@ -1,4 +1,3 @@
-using InventorySystem.Inventory;
 using InventorySystem.Items;
 using InventorySystem.Slot;
 using InventorySystem.Audio;
@@ -24,7 +23,6 @@ namespace InventorySystem.Events
 
         public GameEventController OnInventoryToggle { get; }
         public GameEventController<Vector3> OnPlayerMove { get; }
-        //public GameEventController<ItemSO> OnItemLooted { get; }
         public GameEventController<SlotView> OnSlotClicked { get; }
         public GameEventController<int> OnItemPurchased { get; }
         public GameEventController<int> OnItemSold { get; }
@@ -36,12 +34,10 @@ namespace InventorySystem.Events
         public GameEventController<bool> OnConfirmBuy { get; }
         public GameEventController<bool> OnConfirmSell { get; }
 
-
         public EventService()
         {
             OnInventoryToggle = new GameEventController();
             OnPlayerMove = new GameEventController<Vector3>();
-            //OnItemLooted = new GameEventController<ItemSO, int>();
             OnSlotClicked = new GameEventController<SlotView>();
             OnItemPurchased = new GameEventController<int>();
             OnInventoryUpdate = new GameEventController<ItemSO>();

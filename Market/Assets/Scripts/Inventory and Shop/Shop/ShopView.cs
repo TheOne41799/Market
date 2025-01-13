@@ -1,8 +1,4 @@
-using InventorySystem.Inventory;
 using InventorySystem.Slot;
-using InventorySystem.UI;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

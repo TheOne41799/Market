@@ -27,11 +27,6 @@ namespace InventorySystem.Player
             EventService.Instance.OnItemSold.RemoveListener(playerController.AddPlayerMoney);
         }
 
-        public void Update()
-        {
-            playerController?.Update();
-        }
-
         public int GetPlayerMoney()
         {
             return playerController.GetPlayerMoney(); 

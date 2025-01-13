@@ -1,5 +1,4 @@
 
-
 namespace InventorySystem.Items
 {
     public enum ItemType

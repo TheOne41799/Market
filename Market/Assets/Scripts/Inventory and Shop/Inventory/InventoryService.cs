@@ -1,5 +1,4 @@
 using InventorySystem.Events;
-using InventorySystem.Player;
 using UnityEngine;
 
 namespace InventorySystem.Inventory
@@ -7,24 +6,15 @@ namespace InventorySystem.Inventory
     public class InventoryService
     {
         public InventoryController InventoryController { get; }
-        private PlayerService playerService;
 
-        public InventoryService(InventoryView inventoryViewPrefab, PlayerService service) 
+        public InventoryService(InventoryView inventoryViewPrefab) 
         { 
             var inventoryModel = new InventoryModel();
             var inventoryiew = GameObject.Instantiate(inventoryViewPrefab);
 
-            this.playerService = service;
-
-            InventoryController = new InventoryController(inventoryModel, inventoryiew, playerService);
-
-            
+            InventoryController = new InventoryController(inventoryModel, inventoryiew);
 
             EventService.Instance.OnInventoryToggle.AddListener(InventoryController.ToggleInventoryUI);
-            //EventService.Instance.OnItemLooted.AddListener(InventoryController.AddItem);
-
-            //EventService.Instance.OnItemLooted.AddListener(inventoryController.InventoryOnItemPickUp);
-
             EventService.Instance.OnSlotClicked.AddListener(InventoryController.CurrentSelectedSlot);
             EventService.Instance.OnInventoryUpdate.AddListener(InventoryController.UpdateInventory);
             EventService.Instance.OnConfirmSell.AddListener(InventoryController.DoSellItem);
@@ -33,15 +23,9 @@ namespace InventorySystem.Inventory
         ~InventoryService()
         {
             EventService.Instance.OnInventoryToggle.RemoveListener(InventoryController.ToggleInventoryUI);
-            //EventService.Instance.OnItemLooted.RemoveListener(InventoryController.AddItem);
             EventService.Instance.OnSlotClicked.RemoveListener(InventoryController.CurrentSelectedSlot);
             EventService.Instance.OnInventoryUpdate.RemoveListener(InventoryController.UpdateInventory);
             EventService.Instance.OnConfirmSell.RemoveListener(InventoryController .DoSellItem);
-        }
-
-        public void Update()
-        {
-            InventoryController?.Update();
         }
     }
 }

@@ -16,7 +16,6 @@ namespace InventorySystem.Inputs
                 EventService.Instance.OnPlayerMove.InvokeEvent(movement);
             }
 
-
             if (Input.GetKeyDown(KeyCode.I))
             {
                 EventService.Instance.OnInventoryToggle.InvokeEvent();

@@ -1,9 +1,6 @@
 using InventorySystem.Events;
 using InventorySystem.Inventory;
 using InventorySystem.Player;
-using InventorySystem.Shop;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace InventorySystem.UI
@@ -12,17 +9,14 @@ namespace InventorySystem.UI
     {
         private UIController uiController;
         private InventoryService inventoryService;
-        private PlayerService playerService;
 
-        public UIService(UIView uiViewPrefab, InventoryService service, PlayerService playerServ)
+        public UIService(UIView uiViewPrefab, InventoryService service, PlayerService playerService)
         {
-            var uiModel = new UIModel();
             var uiView = GameObject.Instantiate(uiViewPrefab);
 
             this.inventoryService = service;
-            this.playerService = playerServ;
 
-            uiController = new UIController(uiModel, uiView, inventoryService, playerServ);
+            uiController = new UIController(uiView, inventoryService, playerService);
 
             EventService.Instance.UpdateUI.AddListener(uiController.UpdateUI);
             EventService.Instance.OnSlotClicked.AddListener(uiController.UpdateTooltipUI);
