@@ -3,6 +3,7 @@ using InventorySystem.Items;
 using InventorySystem.Slot;
 using InventorySystem.Audio;
 using UnityEngine;
+using InventorySystem.UI;
 
 namespace InventorySystem.Events
 {
@@ -31,6 +32,7 @@ namespace InventorySystem.Events
         public GameEventController UpdateUI { get; }
         public GameEventController<AudioTypes, bool> OnBackgroundMusicPlay { get; }
         public GameEventController<AudioTypes, bool> OnAudioEffectPlay { get; }
+        public GameEventController<UIPopup> OnUIPopup { get; }
 
 
         public EventService()
@@ -45,6 +47,7 @@ namespace InventorySystem.Events
             UpdateUI = new GameEventController();
             OnBackgroundMusicPlay = new GameEventController<AudioTypes, bool>();
             OnAudioEffectPlay = new GameEventController<AudioTypes, bool>();
+            OnUIPopup = new GameEventController<UIPopup>();
         }
     }
 }

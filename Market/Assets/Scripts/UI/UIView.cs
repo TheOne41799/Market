@@ -17,11 +17,15 @@ namespace InventorySystem.UI
         [SerializeField] private TextMeshProUGUI playerInventorySizeText;
         [SerializeField] private TextMeshProUGUI playerInventoryWeightText;
 
-        [SerializeField] private TextMeshProUGUI itemName; //on top
+        [SerializeField] private GameObject itemTooltipGO;
+        [SerializeField] private TextMeshProUGUI itemName;
         [SerializeField] private Image itemIcon;
-        [SerializeField] private TextMeshProUGUI itemPurchaseOrSellText; //below the icon
+        [SerializeField] private TextMeshProUGUI itemPurchaseOrSellText;
         [SerializeField] private TextMeshProUGUI itemPurchaseOrSellPrice;
         [SerializeField] private TextMeshProUGUI itemWeight;
+
+        [SerializeField] private GameObject UIPopups;
+        [SerializeField] private List<GameObject> UIPopupsList;
 
         private int playerMoney;
         private int playerInventorySize;
@@ -33,6 +37,8 @@ namespace InventorySystem.UI
             UpdatePlayerMoneyText();
             UpdatePlayerInventorySizeText();
             UpdatePlayerInventoryWeightText();
+
+            ToggleInventoryUI();
         }
 
         public void SetUIController(UIController controller)
@@ -84,6 +90,28 @@ namespace InventorySystem.UI
                         itemPurchaseOrSellPrice.text = itemSo.itemPurchasingPrice.ToString();
                         break;
                 }
+            }
+        }
+
+        public void ToggleInventoryUI()
+        {
+            itemTooltipGO.SetActive(!itemTooltipGO.activeSelf);
+        }
+
+        public void HandlePopups(UIPopup uIPopup)
+        {
+            switch(uIPopup)
+            {
+                case UIPopup.INVENTORY_SIZE_OVERFLOW:
+                    break;
+                case UIPopup.INVENTORY_WEIGHT_OVERFLOW:
+                    break;
+                case UIPopup.NOT_ENOUGH_MONEY:
+                    break;
+                case UIPopup.CONFIRM_BUY_SELL:
+                    break;
+                case UIPopup.ITEM_PURCHASED_SOLD:
+                    break;
             }
         }
     }

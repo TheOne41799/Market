@@ -41,5 +41,15 @@ namespace InventorySystem.UI
         {
             view.UpdateItemTooltipUI(slotView.itemSO, slotView.slotType);
         }
+
+        public void ToggleInventoryUI()
+        {
+            view.ToggleInventoryUI();
+        }
+
+        public void HandleUIPopups(UIPopup uIPopup)
+        {
+            view.HandlePopups(uIPopup);
+        }
     }
 }
