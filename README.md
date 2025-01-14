@@ -1,5 +1,6 @@
 # 🛒 Unity Inventory System
 
+# 🎥 WATCH THE DEMO VIDEO
 [![Watch the video](https://img.youtube.com/vi/B7hMu0V3SW0/maxresdefault.jpg)](https://www.youtube.com/watch?v=B7hMu0V3SW0)
 
 ---
