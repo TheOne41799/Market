@@ -33,6 +33,7 @@ namespace InventorySystem.Events
         public GameEventController<UIPopup> OnUIPopup { get; }
         public GameEventController<bool> OnConfirmBuy { get; }
         public GameEventController<bool> OnConfirmSell { get; }
+        public GameEventController OnSpawnItems { get; }
 
         public EventService()
         {
@@ -48,6 +49,7 @@ namespace InventorySystem.Events
             OnUIPopup = new GameEventController<UIPopup>();
             OnConfirmBuy = new GameEventController<bool>();
             OnConfirmSell = new GameEventController<bool>();
+            OnSpawnItems = new GameEventController();
         }
     }
 }

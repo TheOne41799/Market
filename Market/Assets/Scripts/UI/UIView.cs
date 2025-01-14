@@ -62,7 +62,8 @@ namespace InventorySystem.UI
         [SerializeField] private TextMeshProUGUI uiPopupItemSoldText;
         [SerializeField] private Button uiPopupItemSoldCloseButton;
 
-
+        [Header("Gather Items")]
+        [SerializeField] private Button itemGatherButton;
 
         private int playerMoney;
         private int playerInventorySize;
@@ -81,6 +82,8 @@ namespace InventorySystem.UI
 
         private void ConnectUIPopupButtons()
         {
+            itemGatherButton.onClick.AddListener(SpawnPickupItems);
+
             uiPopupSelectAnItemCloseButton.onClick.AddListener(UIPopupSelectAnItemClose);
             uiPopupSelectInventoryItemToSellCloseButton.onClick.AddListener(UIPopupSelectInventoryItemToSellClose);
             uiPopupSelectShopItemToBuyCloseButton.onClick.AddListener(UIPopupSelectShopItemToBuyClose);
@@ -99,6 +102,8 @@ namespace InventorySystem.UI
 
         private void OnDestroy()
         {
+            itemGatherButton.onClick.RemoveListener(SpawnPickupItems);
+
             uiPopupSelectAnItemCloseButton.onClick.RemoveListener(UIPopupSelectAnItemClose);
             uiPopupSelectInventoryItemToSellCloseButton.onClick.RemoveListener(UIPopupSelectInventoryItemToSellClose);
             uiPopupSelectShopItemToBuyCloseButton.onClick.RemoveListener(UIPopupSelectShopItemToBuyClose);
@@ -118,6 +123,12 @@ namespace InventorySystem.UI
         public void SetUIController(UIController controller)
         {
             uiController = controller;
+        }
+
+        private void SpawnPickupItems()
+        {
+            EventService.Instance.OnSpawnItems.InvokeEvent();
+            EventService.Instance.OnInventoryToggle.InvokeEvent();
         }
 
         public void UpdatePlayerMoneyText()
@@ -168,11 +179,15 @@ namespace InventorySystem.UI
         public void ToggleInventoryUI()
         {
             itemTooltipGO.SetActive(!itemTooltipGO.activeSelf);
+
+            itemGatherButton.gameObject.SetActive(!itemGatherButton.gameObject.activeSelf);
         }
 
         public void HandlePopups(UIPopup uIPopup)
         {
-            switch(uIPopup)
+            EventService.Instance.OnInventoryToggle.InvokeEvent();
+
+            switch (uIPopup)
             {
                 case UIPopup.SELECT_ITEM_TO_BUY_OR_SELL:
                     uiPopupSelectAnItem.SetActive(true);
@@ -215,36 +230,42 @@ namespace InventorySystem.UI
         {
             EventService.Instance.OnAudioEffectPlay.InvokeEvent(AudioTypes.INVENTORY_ITEM_PURCHASED_AND_SOLD, false);
             uiPopupSelectAnItem.SetActive(false);
+            EventService.Instance.OnInventoryToggle.InvokeEvent();
         }
 
         private void UIPopupSelectInventoryItemToSellClose()
         {
             EventService.Instance.OnAudioEffectPlay.InvokeEvent(AudioTypes.INVENTORY_ITEM_PURCHASED_AND_SOLD, false);
             uiPopupSelectInventoryItemToSell.SetActive(false);
+            EventService.Instance.OnInventoryToggle.InvokeEvent();
         }
 
         private void UIPopupSelectShopItemToBuyClose()
         {
             EventService.Instance.OnAudioEffectPlay.InvokeEvent(AudioTypes.INVENTORY_ITEM_PURCHASED_AND_SOLD, false);
             uiPopupSelectShopItemToBuy.SetActive(false);
+            EventService.Instance.OnInventoryToggle.InvokeEvent();
         }
 
         private void UIPopupInventorySizeOverflowClose()
         {
             EventService.Instance.OnAudioEffectPlay.InvokeEvent(AudioTypes.INVENTORY_ITEM_PURCHASED_AND_SOLD, false);
             uiPopupInventorySizeOverflow.SetActive(false);
+            EventService.Instance.OnInventoryToggle.InvokeEvent();
         }
 
         private void UIPopupInventoryWeightOverflowClose()
         {
             EventService.Instance.OnAudioEffectPlay.InvokeEvent(AudioTypes.INVENTORY_ITEM_PURCHASED_AND_SOLD, false);
             uiPopupInventoryWeightOverflow.SetActive(false);
+            EventService.Instance.OnInventoryToggle.InvokeEvent();
         }
 
         private void UIPopupNotEnoughMoneyClose()
         {
             EventService.Instance.OnAudioEffectPlay.InvokeEvent(AudioTypes.INVENTORY_ITEM_PURCHASED_AND_SOLD, false);
             uiPopupNotEnoughMoney.SetActive(false);
+            EventService.Instance.OnInventoryToggle.InvokeEvent();
         }
 
         private void UIPopupConfirmBuyYes()
@@ -253,6 +274,7 @@ namespace InventorySystem.UI
 
             EventService.Instance.OnConfirmBuy.InvokeEvent(true);
             uiPopupInventoryConfirmBuy.SetActive(false);
+            EventService.Instance.OnInventoryToggle.InvokeEvent();
         }
 
         private void UIPopupConfirmBuyNo()
@@ -261,6 +283,7 @@ namespace InventorySystem.UI
 
             EventService.Instance.OnConfirmBuy.InvokeEvent(false);
             uiPopupInventoryConfirmBuy.SetActive(false);
+            EventService.Instance.OnInventoryToggle.InvokeEvent();
         }
 
         private void ConfirmBuyPopupTextDetails(string itemName, string itemBuyPrice)
@@ -278,6 +301,7 @@ namespace InventorySystem.UI
         {
             EventService.Instance.OnAudioEffectPlay.InvokeEvent(AudioTypes.INVENTORY_ITEM_PURCHASED_AND_SOLD, false);
             uiPopupItemPurchased.SetActive(false);
+            EventService.Instance.OnInventoryToggle.InvokeEvent();
         }
 
         private void UIPopupConfirmSellYes()
@@ -286,6 +310,7 @@ namespace InventorySystem.UI
 
             EventService.Instance.OnConfirmSell.InvokeEvent(true);
             uiPopupInventoryConfirmSell.SetActive(false);
+            EventService.Instance.OnInventoryToggle.InvokeEvent();
         }
 
         private void UIPopupConfirmSellNo()
@@ -294,6 +319,7 @@ namespace InventorySystem.UI
 
             EventService.Instance.OnConfirmSell.InvokeEvent(false);
             uiPopupInventoryConfirmSell.SetActive(false);
+            EventService.Instance.OnInventoryToggle.InvokeEvent();
         }
 
         private void ConfirmSellPopupTextDetails(string itemName, string itemSellPrice)
@@ -311,6 +337,7 @@ namespace InventorySystem.UI
         {
             EventService.Instance.OnAudioEffectPlay.InvokeEvent(AudioTypes.INVENTORY_ITEM_PURCHASED_AND_SOLD, false);
             uiPopupItemSold.SetActive(false);
+            EventService.Instance.OnInventoryToggle.InvokeEvent();
         }
     }
 }

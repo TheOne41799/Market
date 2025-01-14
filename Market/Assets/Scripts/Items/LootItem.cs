@@ -19,8 +19,7 @@ namespace InventorySystem.Items
         private void OnTriggerEnter(Collider other)
         {
             if (other.gameObject.GetComponent<PlayerView>())
-            {
-                
+            {                
                 if (itemSO == null) return;
 
                 EventService.Instance.OnInventoryUpdate.InvokeEvent(itemSO);

@@ -124,7 +124,9 @@ namespace InventorySystem.Inventory
         {
             if (model.CurrentInventoryWeight + itemSO.itemWeight > model.MaxInventoryWeight
                 || model.CurrentInventorySize >= model.MaxInventorySize)
-            {
+            {                
+                EventService.Instance.OnUIPopup.InvokeEvent(UIPopup.INVENTORY_SIZE_OVERFLOW);
+                EventService.Instance.OnInventoryToggle.InvokeEvent();
                 return;
             }
 
