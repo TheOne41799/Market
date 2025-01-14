@@ -122,9 +122,15 @@ namespace InventorySystem.Inventory
 
         public void UpdateInventory(ItemSO itemSO)
         {
-            if (model.CurrentInventoryWeight + itemSO.itemWeight > model.MaxInventoryWeight
-                || model.CurrentInventorySize >= model.MaxInventorySize)
+            if (model.CurrentInventoryWeight + itemSO.itemWeight > model.MaxInventoryWeight)
             {                
+                EventService.Instance.OnUIPopup.InvokeEvent(UIPopup.INVENTORY_WEIGHT_OVERFLOW);
+                EventService.Instance.OnInventoryToggle.InvokeEvent();
+                return;
+            }
+
+            if (model.CurrentInventorySize >= model.MaxInventorySize)
+            {
                 EventService.Instance.OnUIPopup.InvokeEvent(UIPopup.INVENTORY_SIZE_OVERFLOW);
                 EventService.Instance.OnInventoryToggle.InvokeEvent();
                 return;
