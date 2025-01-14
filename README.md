@@ -62,9 +62,7 @@ A simple inventory system built with Unity and C#.
 
 ![Alt Text](https://github.com/TheOne41799/Market/blob/main/Market/Assets/ScreenShots/Screenshot%20(14).png)  
 
-![Alt Text](https://github.com/TheOne41799/Market/blob/main/Market/Assets/ScreenShots/Screenshot%20(15).png)  
-
-![Alt Text](https://github.com/TheOne41799/Market/blob/main/Market/Assets/ScreenShots/Screenshot%20(16).png)  
+![Alt Text](https://github.com/TheOne41799/Market/blob/main/Market/Assets/ScreenShots/Screenshot%20(15).png) 
 
 ## 🎵 Music Track
 RoleMusic - Juglar Street  
