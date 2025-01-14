@@ -54,8 +54,4 @@ A simple inventory system built with Unity and C#.
 
 ## 🖼️ Screenshots
 
-Market/Assets/ScreenShots/Screenshot (11).png
-
-(Market/Assets/ScreenShots/MarketInventorySystemLatest.drawio.png)
-
-![Item Collection](https://your-image-link-here.com)
+![UML Diagram](Market/Assets/ScreenShots/MarketInventorySystemLatest.drawio.png)  
