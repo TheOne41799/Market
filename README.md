@@ -54,13 +54,21 @@ A simple inventory system built with Unity and C#.
 
 ## 🖼️ Screenshots
 
-![scr](Market/Assets/ScreenShots/Screenshot (11).png)  
+![Alt Text](https://github.com/TheOne41799/Market/blob/main/Market/Assets/ScreenShots/Screenshot%20(11).png)
 
-![UML Diagram](Market/Assets/ScreenShots/MarketInventorySystemLatest.drawio.png)  
+![Alt Text](https://github.com/TheOne41799/Market/blob/main/Market/Assets/ScreenShots/Screenshot%20(12).png)  
 
-![UML Diagram](Market/Assets/ScreenShots/MarketInventorySystemLatest.drawio.png)  
+![Alt Text](https://github.com/TheOne41799/Market/blob/main/Market/Assets/ScreenShots/Screenshot%20(13).png)  
 
-![UML Diagram](Market/Assets/ScreenShots/MarketInventorySystemLatest.drawio.png)  
+![Alt Text](https://github.com/TheOne41799/Market/blob/main/Market/Assets/ScreenShots/Screenshot%20(14).png)  
 
-![UML Diagram](Market/Assets/ScreenShots/MarketInventorySystemLatest.drawio.png)  
+![Alt Text](https://github.com/TheOne41799/Market/blob/main/Market/Assets/ScreenShots/Screenshot%20(15).png)  
+
+![Alt Text](https://github.com/TheOne41799/Market/blob/main/Market/Assets/ScreenShots/Screenshot%20(16).png)  
+
+## 🎵 Music Track
+RoleMusic - Juglar Street  
+https://freemusicarchive.org/music/Rolemusic
+
+Kenny Assets - Inventory Sounds
 
